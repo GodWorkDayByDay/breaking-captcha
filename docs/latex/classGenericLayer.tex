@@ -1,0 +1,139 @@
+\hypertarget{classGenericLayer}{
+\section{Generic\-Layer Class Reference}
+\label{classGenericLayer}\index{GenericLayer@{GenericLayer}}
+}
+{\tt \#include $<$Generic\-Layer.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{classGenericLayer_03c284e00a6a3e261665f46dff41a9ea}{Generic\-Layer} (int \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{num\-Neurons}, \hyperlink{classGenericLayer}{Generic\-Layer} $\ast$parent, \hyperlink{classGenericLayer}{Generic\-Layer} $\ast$child)
+\item 
+virtual \hyperlink{classGenericLayer_3abc382b20bf9585dbba35bb325fff90}{$\sim$Generic\-Layer} ()
+\item 
+void \hyperlink{classGenericLayer_2e2e170339c48bbcfe05afe9a1f60e43}{init\-Weights} ()
+\item 
+void \hyperlink{classGenericLayer_c9357145e80d180b812df7bddeb5139d}{init\-Neurons} ()
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+\hyperlink{classGenericLayer}{Generic\-Layer} $\ast$ \hyperlink{classGenericLayer_f936bd9ef0690287bf7ce9fdddaec09d}{parent\-Layer}
+\item 
+\hyperlink{classGenericLayer}{Generic\-Layer} $\ast$ \hyperlink{classGenericLayer_1eb75b8a4e3951ae983f801bb1d8c478}{child\-Layer}
+\item 
+\hyperlink{classNeuron}{Neuron} $\ast$ \hyperlink{classGenericLayer_2464f709af50f9def120c1978ed68f24}{neurons}
+\item 
+int \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{num\-Neurons}
+\item 
+double $\ast$$\ast$ \hyperlink{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}{weights}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Provides a generic implementation of a neural network layer. In general, the network is defined as loosely coupled neurons in a feed forward three layered design. The neurons are all each connected to adjacent layer neurons, and those connections have weights associated with them. In this implementation, those neurons with a child layer will be associated with the weights between them and their children. Also included are bias factors, which are stored in the neurons themselves since there is only one bias per neuron. The neurons will be initialized with values of 0 except for the bias value which will be 1. The error factor is also included on the neuron itself. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classGenericLayer_03c284e00a6a3e261665f46dff41a9ea}{
+\index{GenericLayer@{Generic\-Layer}!GenericLayer@{GenericLayer}}
+\index{GenericLayer@{GenericLayer}!GenericLayer@{Generic\-Layer}}
+\subsubsection[GenericLayer]{\setlength{\rightskip}{0pt plus 5cm}Generic\-Layer::Generic\-Layer (int {\em num\-Neurons}, \hyperlink{classGenericLayer}{Generic\-Layer} $\ast$ {\em parent}, \hyperlink{classGenericLayer}{Generic\-Layer} $\ast$ {\em child})}}
+\label{classGenericLayer_03c284e00a6a3e261665f46dff41a9ea}
+
+
+Defines the constructor for the generic neural layer. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em num\-Neurons}]The number of neurons to create in this layer. \item[{\em parent}]A pointer to the parent layer of this current layer. NULL if this layer is the inputer layer. \item[{\em child}]A pointer to the child layer of this current layer. NULL if this layer is the output layer. 
+
+\begin{DocInclude}\begin{verbatim}GenericLayer input, hidden, output;
+input =  new GenericLayer(50, NULL, &hidden);
+hidden = new GenericLayer(50, &input, &output);
+output = new GenericLayer(50, &hidden, NULL);
+\end{verbatim}
+\end{DocInclude}
+ \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Exceptions:]
+\begin{description}
+\item[{\em integer}]Throws an integer exception when the bounds of the Generic\-Layer::MAX\_\-NEURONS or Generic\-Layer::MIN\_\-NEURONS number of neurons in this layer has been broken. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Postcondition:]All the default values have been assigned and all arrays have been allocated. \end{Desc}
+\hypertarget{classGenericLayer_3abc382b20bf9585dbba35bb325fff90}{
+\index{GenericLayer@{Generic\-Layer}!~GenericLayer@{$\sim$GenericLayer}}
+\index{~GenericLayer@{$\sim$GenericLayer}!GenericLayer@{Generic\-Layer}}
+\subsubsection[$\sim$GenericLayer]{\setlength{\rightskip}{0pt plus 5cm}Generic\-Layer::$\sim$Generic\-Layer ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{classGenericLayer_3abc382b20bf9585dbba35bb325fff90}
+
+
+Deallocates the memory from the neuron and weight arrays. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classGenericLayer_2e2e170339c48bbcfe05afe9a1f60e43}{
+\index{GenericLayer@{Generic\-Layer}!initWeights@{initWeights}}
+\index{initWeights@{initWeights}!GenericLayer@{Generic\-Layer}}
+\subsubsection[initWeights]{\setlength{\rightskip}{0pt plus 5cm}void Generic\-Layer::init\-Weights ()}}
+\label{classGenericLayer_2e2e170339c48bbcfe05afe9a1f60e43}
+
+
+Initialize the weights array, but only if we are in a layer with a child because they are responsible for keeping track of the weights. The number of total entries should number \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{Generic\-Layer.num\-Neurons}$\ast$Generic\-Layer.child\-Layer.num\-Neurons. The weights are all initialized to zero before training. \begin{Desc}
+\item[Postcondition:]The array containing the weights for each neuron is allocated and has been filled with zeros. It is ready to be trained. \end{Desc}
+\hypertarget{classGenericLayer_c9357145e80d180b812df7bddeb5139d}{
+\index{GenericLayer@{Generic\-Layer}!initNeurons@{initNeurons}}
+\index{initNeurons@{initNeurons}!GenericLayer@{Generic\-Layer}}
+\subsubsection[initNeurons]{\setlength{\rightskip}{0pt plus 5cm}void Generic\-Layer::init\-Neurons ()}}
+\label{classGenericLayer_c9357145e80d180b812df7bddeb5139d}
+
+
+\begin{Desc}
+\item[Precondition:]The neuron array is undefined. \end{Desc}
+\begin{Desc}
+\item[Postcondition:]The neuron array has been allocated and intelligent defaults have been set. There is now \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{Generic\-Layer::num\-Neurons} neurons in this layer. It is ready to be trained. \end{Desc}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classGenericLayer_f936bd9ef0690287bf7ce9fdddaec09d}{
+\index{GenericLayer@{Generic\-Layer}!parentLayer@{parentLayer}}
+\index{parentLayer@{parentLayer}!GenericLayer@{Generic\-Layer}}
+\subsubsection[parentLayer]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{classGenericLayer}{Generic\-Layer}$\ast$ \hyperlink{classGenericLayer_f936bd9ef0690287bf7ce9fdddaec09d}{Generic\-Layer::parent\-Layer}}}
+\label{classGenericLayer_f936bd9ef0690287bf7ce9fdddaec09d}
+
+
+Pointer to the parent layer of this layer. \hypertarget{classGenericLayer_1eb75b8a4e3951ae983f801bb1d8c478}{
+\index{GenericLayer@{Generic\-Layer}!childLayer@{childLayer}}
+\index{childLayer@{childLayer}!GenericLayer@{Generic\-Layer}}
+\subsubsection[childLayer]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{classGenericLayer}{Generic\-Layer}$\ast$ \hyperlink{classGenericLayer_1eb75b8a4e3951ae983f801bb1d8c478}{Generic\-Layer::child\-Layer}}}
+\label{classGenericLayer_1eb75b8a4e3951ae983f801bb1d8c478}
+
+
+Pointer to the child layer of this layer. \hypertarget{classGenericLayer_2464f709af50f9def120c1978ed68f24}{
+\index{GenericLayer@{Generic\-Layer}!neurons@{neurons}}
+\index{neurons@{neurons}!GenericLayer@{Generic\-Layer}}
+\subsubsection[neurons]{\setlength{\rightskip}{0pt plus 5cm}\hyperlink{classNeuron}{Neuron}$\ast$ \hyperlink{classGenericLayer_2464f709af50f9def120c1978ed68f24}{Generic\-Layer::neurons}}}
+\label{classGenericLayer_2464f709af50f9def120c1978ed68f24}
+
+
+The array of neurons that populate this layer of the network. \hypertarget{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{
+\index{GenericLayer@{Generic\-Layer}!numNeurons@{numNeurons}}
+\index{numNeurons@{numNeurons}!GenericLayer@{Generic\-Layer}}
+\subsubsection[numNeurons]{\setlength{\rightskip}{0pt plus 5cm}int \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{Generic\-Layer::num\-Neurons}}}
+\label{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}
+
+
+The number of neurons to create in this layer. \hypertarget{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}{
+\index{GenericLayer@{Generic\-Layer}!weights@{weights}}
+\index{weights@{weights}!GenericLayer@{Generic\-Layer}}
+\subsubsection[weights]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ \hyperlink{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}{Generic\-Layer::weights}}}
+\label{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}
+
+
+The 2D array of weights with dimensions of this layer's num\-Neurons by the child layer's num\-Neruons. If there is no child layer then it remains NULL. 
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+src/\hyperlink{GenericLayer_8h}{Generic\-Layer.h}\item 
+src/\hyperlink{GenericLayer_8cpp}{Generic\-Layer.cpp}\end{CompactItemize}

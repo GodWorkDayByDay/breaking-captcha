@@ -1,0 +1,88 @@
+\hypertarget{classNeuron}{
+\section{Neuron Class Reference}
+\label{classNeuron}\index{Neuron@{Neuron}}
+}
+{\tt \#include $<$Neuron.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{classNeuron_c35024fa3eea9421afabdda2e59cd1aa}{Neuron} (double \hyperlink{classNeuron_e1988ffe53bfd53ce979aecf01a164e3}{value}, double \hyperlink{classNeuron_7dc59218069023c3b8348a353902b0ac}{bias}, double \hyperlink{classNeuron_27aa94b5d7658f718711cedb3f96dc7f}{bias\-Weight})
+\item 
+virtual \hyperlink{classNeuron_94a250ce7e167760e593979b899745b1}{$\sim$Neuron} ()
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+double \hyperlink{classNeuron_e1988ffe53bfd53ce979aecf01a164e3}{value}
+\item 
+double \hyperlink{classNeuron_7dc59218069023c3b8348a353902b0ac}{bias}
+\item 
+double \hyperlink{classNeuron_27aa94b5d7658f718711cedb3f96dc7f}{bias\-Weight}
+\item 
+double \hyperlink{classNeuron_d4d851d9f4f5dccb6283e5c19726e1e7}{error}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Provides the structure of the neuron. The \hyperlink{classNeuron}{Neuron} class has details about the neuron's value, which is the value stored by the neruon. The neuron's bias, which is used and adjusted when training and computing new values for the network. The neuron bias' weight which is used similarly to the bias. And also the error, which is used primarily in training for computing how far off the network's output is from the desired output. All of this is used generically and in conjuction with the \hyperlink{classGenericLayer}{Generic\-Layer} class to implement any sort of nerual network layout. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classNeuron_c35024fa3eea9421afabdda2e59cd1aa}{
+\index{Neuron@{Neuron}!Neuron@{Neuron}}
+\index{Neuron@{Neuron}!Neuron@{Neuron}}
+\subsubsection[Neuron]{\setlength{\rightskip}{0pt plus 5cm}Neuron::Neuron (double {\em value} = {\tt 0.0}, double {\em bias} = {\tt 1.0}, double {\em bias\-Weight} = {\tt 0.0})}}
+\label{classNeuron_c35024fa3eea9421afabdda2e59cd1aa}
+
+
+Defines the constructor for the \hyperlink{classNeuron}{Neuron} class. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em value}]A double representing the value of the neuron. \item[{\em bias}]A double representing the bias of the neuron. \item[{\em bias\-Weight}]A double representing the weight of the bias on the given neuron. \end{description}
+\end{Desc}
+\hypertarget{classNeuron_94a250ce7e167760e593979b899745b1}{
+\index{Neuron@{Neuron}!~Neuron@{$\sim$Neuron}}
+\index{~Neuron@{$\sim$Neuron}!Neuron@{Neuron}}
+\subsubsection[$\sim$Neuron]{\setlength{\rightskip}{0pt plus 5cm}Neuron::$\sim$Neuron ()\hspace{0.3cm}{\tt  \mbox{[}virtual\mbox{]}}}}
+\label{classNeuron_94a250ce7e167760e593979b899745b1}
+
+
+\hyperlink{classNeuron}{Neuron} class desctructor. 
+
+\subsection{Member Data Documentation}
+\hypertarget{classNeuron_e1988ffe53bfd53ce979aecf01a164e3}{
+\index{Neuron@{Neuron}!value@{value}}
+\index{value@{value}!Neuron@{Neuron}}
+\subsubsection[value]{\setlength{\rightskip}{0pt plus 5cm}double \hyperlink{classNeuron_e1988ffe53bfd53ce979aecf01a164e3}{Neuron::value}}}
+\label{classNeuron_e1988ffe53bfd53ce979aecf01a164e3}
+
+
+The value of the neuron. \hypertarget{classNeuron_7dc59218069023c3b8348a353902b0ac}{
+\index{Neuron@{Neuron}!bias@{bias}}
+\index{bias@{bias}!Neuron@{Neuron}}
+\subsubsection[bias]{\setlength{\rightskip}{0pt plus 5cm}double \hyperlink{classNeuron_7dc59218069023c3b8348a353902b0ac}{Neuron::bias}}}
+\label{classNeuron_7dc59218069023c3b8348a353902b0ac}
+
+
+The bias of the neuron. \hypertarget{classNeuron_27aa94b5d7658f718711cedb3f96dc7f}{
+\index{Neuron@{Neuron}!biasWeight@{biasWeight}}
+\index{biasWeight@{biasWeight}!Neuron@{Neuron}}
+\subsubsection[biasWeight]{\setlength{\rightskip}{0pt plus 5cm}double \hyperlink{classNeuron_27aa94b5d7658f718711cedb3f96dc7f}{Neuron::bias\-Weight}}}
+\label{classNeuron_27aa94b5d7658f718711cedb3f96dc7f}
+
+
+The weight of the bias on the neuron. \hypertarget{classNeuron_d4d851d9f4f5dccb6283e5c19726e1e7}{
+\index{Neuron@{Neuron}!error@{error}}
+\index{error@{error}!Neuron@{Neuron}}
+\subsubsection[error]{\setlength{\rightskip}{0pt plus 5cm}double \hyperlink{classNeuron_d4d851d9f4f5dccb6283e5c19726e1e7}{Neuron::error}}}
+\label{classNeuron_d4d851d9f4f5dccb6283e5c19726e1e7}
+
+
+The error associated with the computation of the network versus the desired output. 
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+src/\hyperlink{Neuron_8h}{Neuron.h}\item 
+src/\hyperlink{Neuron_8cpp}{Neuron.cpp}\end{CompactItemize}

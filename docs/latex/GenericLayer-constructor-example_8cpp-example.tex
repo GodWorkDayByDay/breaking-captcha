@@ -1,0 +1,17 @@
+\hypertarget{GenericLayer-constructor-example_8cpp-example}{
+\section{Generic\-Layer-constructor-example.cpp}
+}
+Defines the constructor for the generic neural layer. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em num\-Neurons}]The number of neurons to create in this layer. \item[{\em parent}]A pointer to the parent layer of this current layer. NULL if this layer is the inputer layer. \item[{\em child}]A pointer to the child layer of this current layer. NULL if this layer is the output layer.\end{description}
+\end{Desc}
+
+
+\begin{DocInclude}\begin{verbatim}1 GenericLayer input, hidden, output;
+2 input =  new GenericLayer(50, NULL, hidden);
+3 hidden = new GenericLayer(50, input, output);
+4 output = new GenericLayer(50, hidden, NULL);
+\end{verbatim}
+\end{DocInclude}
+ 
