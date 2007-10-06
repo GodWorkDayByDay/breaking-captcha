@@ -14,6 +14,7 @@
 <div class="tabs">
   <ul>
     <li><a href="annotated.html"><span>Class&nbsp;List</span></a></li>
+    <li><a href="hierarchy.html"><span>Class&nbsp;Hierarchy</span></a></li>
     <li><a href="functions.html"><span>Class&nbsp;Members</span></a></li>
   </ul></div>
 <h1>Neuron Class Reference</h1><!-- doxytag: class="Neuron" --><code>#include &lt;Neuron.h&gt;</code>
@@ -21,7 +22,7 @@
 <a href="classNeuron-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNeuron.html#c35024fa3eea9421afabdda2e59cd1aa">Neuron</a> (double <a class="el" href="classNeuron.html#e1988ffe53bfd53ce979aecf01a164e3">value</a>, double <a class="el" href="classNeuron.html#7dc59218069023c3b8348a353902b0ac">bias</a>, double <a class="el" href="classNeuron.html#27aa94b5d7658f718711cedb3f96dc7f">biasWeight</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNeuron.html#823487d01615fadb8ac19a2768dd9d96">Neuron</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNeuron.html#94a250ce7e167760e593979b899745b1">~Neuron</a> ()</td></tr>
 
@@ -39,46 +40,23 @@
 Provides the structure of the neuron. The <a class="el" href="classNeuron.html">Neuron</a> class has details about the neuron's value, which is the value stored by the neruon. The neuron's bias, which is used and adjusted when training and computing new values for the network. The neuron bias' weight which is used similarly to the bias. And also the error, which is used primarily in training for computing how far off the network's output is from the desired output. All of this is used generically and in conjuction with the <a class="el" href="classGenericLayer.html">GenericLayer</a> class to implement any sort of nerual network layout. 
 <p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="c35024fa3eea9421afabdda2e59cd1aa"></a><!-- doxytag: member="Neuron::Neuron" ref="c35024fa3eea9421afabdda2e59cd1aa" args="(double value, double bias, double biasWeight)" -->
+<a class="anchor" name="823487d01615fadb8ac19a2768dd9d96"></a><!-- doxytag: member="Neuron::Neuron" ref="823487d01615fadb8ac19a2768dd9d96" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Neuron::Neuron           </td>
           <td>(</td>
-          <td class="paramtype">double&nbsp;</td>
-          <td class="paramname"> <em>value</em> = <code>0.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&nbsp;</td>
-          <td class="paramname"> <em>bias</em> = <code>1.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&nbsp;</td>
-          <td class="paramname"> <em>biasWeight</em> = <code>0.0</code></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"></td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>
-Defines the constructor for the <a class="el" href="classNeuron.html">Neuron</a> class. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>value</em>&nbsp;</td><td>A double representing the value of the neuron. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>bias</em>&nbsp;</td><td>A double representing the bias of the neuron. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>biasWeight</em>&nbsp;</td><td>A double representing the weight of the bias on the given neuron. </td></tr>
-  </table>
-</dl>
-
+Defines the constructor for the <a class="el" href="classNeuron.html">Neuron</a> class. 
 </div>
 </div><p>
 <a class="anchor" name="94a250ce7e167760e593979b899745b1"></a><!-- doxytag: member="Neuron::~Neuron" ref="94a250ce7e167760e593979b899745b1" args="()" -->
@@ -163,7 +141,7 @@ The error associated with the computation of the network versus the desired outp
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="Neuron_8h.html">Neuron.h</a><li>src/<a class="el" href="Neuron_8cpp.html">Neuron.cpp</a></ul>
-<hr size="1"><address style="align: right;"><small>Generated on Tue Oct 2 03:16:27 2007 for BreakingCaptcha by&nbsp;
+<hr size="1"><address style="align: right;"><small>Generated on Sat Oct 6 14:14:20 2007 for BreakingCaptcha by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.1 </small></address>
 </body>
