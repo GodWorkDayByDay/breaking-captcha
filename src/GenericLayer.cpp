@@ -8,7 +8,7 @@
 
 
 #include "GenericLayer.h"
-#include "omp.h"
+#include <omp.h>
 
 /**
  * Defines the constructor for the generic neural layer.
@@ -20,17 +20,17 @@
  * @post All the default values have been assigned and all arrays have been allocated.
 **/ 
 GenericLayer::GenericLayer(int numNeurons, GenericLayer* parent, GenericLayer* child) {
-	if ( numNeurons >= this.MIN_NEURONS && numNeurons <= this.MAX_NEURONS ) {
-		this.numNeurons = numNeurons;
+	if ( numNeurons >= this->MIN_NEURONS && numNeurons <= this->MAX_NEURONS ) {
+		this->numNeurons = numNeurons;
 	}
 	else {
 		throw numNeurons;
 	}
-	this.parentLayer = parent;
-	this.childLayer = child;
+	this->parentLayer = parent;
+	this->childLayer = child;
 	
-	this.initWeights();
-	this.initNeurons();
+	this->initWeights();
+	this->initNeurons();
 }
 
 /**
@@ -41,14 +41,14 @@ GenericLayer::GenericLayer(int numNeurons, GenericLayer* parent, GenericLayer* c
  * @post The array containing the weights for each neuron is allocated and has been filled with zeros. It is ready to be trained.
 **/ 
 void GenericLayer::initWeights() {
-	if ( this.childLayer != NULL ) {
-		this.weights = new double*[this.numNeurons];
+	if ( this->childLayer != 0 ) {
+		this->weights = new double*[this->numNeurons];
 		
 		#pragma omp parallel
-		for (int i=0; i<this.numNeurons; ++i) {
-			this.weights[i] = new double[this.childLayer.numNeurons];
-			for (int j=0; j<this.childLayer.numNeurons; ++i) {
-				this.weights[i][j] = 0.0;
+		for (int i=0; i<this->numNeurons; ++i) {
+			this->weights[i] = new double[this->childLayer->numNeurons];
+			for (int j=0; j<this->childLayer->numNeurons; ++i) {
+				this->weights[i][j] = 0.0;
 			}
 		}
 	}
@@ -59,20 +59,20 @@ void GenericLayer::initWeights() {
  * @post The neuron array has been allocated and intelligent defaults have been set. There is now GenericLayer::numNeurons neurons in this layer. It is ready to be trained.
 **/
 void GenericLayer::initNeurons() {
-	this.neurons = new Neuron*[this.numNeurons];
+	this->neurons = new Neuron[this->numNeurons];
 	
-	#pragma omp parallel
-	for (int i=0; i<numNeurons; ++i) {
-		this.neurons[i] = new Neuron();
-	}
+	//#pragma omp parallel
+	//for (int i=0; i<this->numNeurons; ++i) {
+	//	this->neurons[i] = new Neuron();
+	//}
 }
 
 /** Deallocates the memory from the neuron and weight arrays. **/
 GenericLayer::~GenericLayer() {
 #pragma omp parallel
-	for (int i=0; i<this.numNeurons; ++i) {
-		delete[] this.weights[i];
+	for (int i=0; i<this->numNeurons; ++i) {
+		delete[] this->weights[i];
 	}
-	delete[] this.weights;
-	delete[] this.neurons;
+	delete[] this->weights;
+	delete[] this->neurons;
 }

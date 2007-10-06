@@ -6,6 +6,8 @@
  * Header file for the GenericLayer class.
 **/ 
 
+#include "Neuron.h"
+
 #ifndef GENERICLAYER_H_
 #define GENERICLAYER_H_
 
@@ -24,8 +26,8 @@
 **/ 
 class GenericLayer {
 private:
-	const int MAX_NEURONS = 1000; /**< Maximum number of neurons allowed in this layer. **/
-	const int MIN_NEURONS = 2; /**< Minimum number of neurons allowed in this layer **/
+	static const int MAX_NEURONS = 1000; /**< Maximum number of neurons allowed in this layer. **/
+	static const int MIN_NEURONS = 2; /**< Minimum number of neurons allowed in this layer **/
 public:
 	GenericLayer(int numNeurons, GenericLayer* parent, GenericLayer* child);
 	virtual ~GenericLayer();
