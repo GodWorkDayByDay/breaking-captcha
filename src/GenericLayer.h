@@ -33,6 +33,7 @@ public:
 	virtual ~GenericLayer();
 	void initWeights();
 	void initNeurons();
+	void init();
 	GenericLayer* parentLayer; /**< Pointer to the parent layer of this layer. **/
 	GenericLayer* childLayer; /**< Pointer to the child layer of this layer. **/
 	Neuron* neurons; /**< The array of neurons that populate this layer of the network. **/

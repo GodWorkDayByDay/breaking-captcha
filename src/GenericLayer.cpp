@@ -9,6 +9,7 @@
 
 #include "GenericLayer.h"
 #include <omp.h>
+#include <cstring>
 
 /**
  * Defines the constructor for the generic neural layer.
@@ -34,6 +35,23 @@ GenericLayer::GenericLayer(int numNeurons, GenericLayer* parent, GenericLayer* c
 }
 
 /**
+ * Since the layers are created in a linked manner, such that the input layer
+ * is linked to the hidden layer, etc., we need another method, outside of the
+ * constructor so we can create the data structures when all the information
+ * is made available. Doing so in the constructor would fail, for example, since creation
+ * of the input layer's data structures implies knowledge of the hidden layer's
+ * data, which may or may not have been previously defined. In this way we can
+ * safegaurd that the data is available.
+ * 
+ * @pre All layers have been instanciated with a number of neurons to create, a parent layer if any, and a child layer if any.
+ * @post The current layer's data structures will all have been created based on the other related layers.
+**/
+void GenericLayer::init() {
+	this->initWeights();
+	this->initNeurons();
+}
+
+/**
  * Initialize the weights array, but only if we are in a layer with a child because
  * they are responsible for keeping track of the weights.
  * The number of total entries should number GenericLayer.numNeurons*GenericLayer.childLayer.numNeurons.
@@ -41,7 +59,7 @@ GenericLayer::GenericLayer(int numNeurons, GenericLayer* parent, GenericLayer* c
  * @post The array containing the weights for each neuron is allocated and has been filled with zeros. It is ready to be trained.
 **/ 
 void GenericLayer::initWeights() {
-	if ( this->childLayer != 0 ) {
+	if ( this->childLayer != NULL ) {
 		this->weights = new double*[this->numNeurons];
 		
 		#pragma omp parallel
