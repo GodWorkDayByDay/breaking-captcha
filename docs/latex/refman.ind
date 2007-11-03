@@ -1,35 +1,45 @@
 \begin{theindex}
 
   \item {$\sim $GenericLayer}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{6}
+    \subitem {GenericLayer}, \hyperpage{6}
   \item {$\sim $Neuron}
-    \subitem {Neuron}, \hyperpage{8}
+    \subitem {Neuron}, \hyperpage{12}
 
   \indexspace
 
   \item {bias}
-    \subitem {Neuron}, \hyperpage{8}
+    \subitem {Neuron}, \hyperpage{12}
   \item {biasWeight}
-    \subitem {Neuron}, \hyperpage{9}
+    \subitem {Neuron}, \hyperpage{12}
 
   \indexspace
 
+  \item {calculateLocalGradients}
+    \subitem {NeuralNet}, \hyperpage{9}
+  \item {calculateNeuronValues}
+    \subitem {NeuralNet}, \hyperpage{9}
   \item {childLayer}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{7}
+    \subitem {GenericLayer}, \hyperpage{7}
+  \item {compute}
+    \subitem {NeuralNet}, \hyperpage{9}
+
+  \indexspace
+
+  \item {desiredOutput}
+    \subitem {NeuralNet}, \hyperpage{10}
 
   \indexspace
 
   \item {error}
-    \subitem {Neuron}, \hyperpage{9}
+    \subitem {Neuron}, \hyperpage{13}
 
   \indexspace
 
   \item {GenericLayer}, \hyperpage{5}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{6}
-  \item {Generic\discretionary {-}{}{}Layer}
     \subitem {$\sim $GenericLayer}, \hyperpage{6}
     \subitem {childLayer}, \hyperpage{7}
     \subitem {GenericLayer}, \hyperpage{6}
+    \subitem {init}, \hyperpage{7}
     \subitem {initNeurons}, \hyperpage{6}
     \subitem {initWeights}, \hyperpage{6}
     \subitem {neurons}, \hyperpage{7}
@@ -39,45 +49,97 @@
 
   \indexspace
 
-  \item {initNeurons}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{6}
-  \item {initWeights}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{6}
+  \item {hidden}
+    \subitem {NeuralNet}, \hyperpage{10}
 
   \indexspace
 
-  \item {Neuron}, \hyperpage{8}
-    \subitem {$\sim $Neuron}, \hyperpage{8}
-    \subitem {bias}, \hyperpage{8}
-    \subitem {biasWeight}, \hyperpage{9}
-    \subitem {error}, \hyperpage{9}
-    \subitem {Neuron}, \hyperpage{8}
-    \subitem {value}, \hyperpage{8}
+  \item {init}
+    \subitem {GenericLayer}, \hyperpage{7}
+  \item {initNeurons}
+    \subitem {GenericLayer}, \hyperpage{6}
+  \item {initWeights}
+    \subitem {GenericLayer}, \hyperpage{6}
+  \item {input}
+    \subitem {NeuralNet}, \hyperpage{10}
+  \item {inputData}
+    \subitem {NeuralNet}, \hyperpage{10}
+
+  \indexspace
+
+  \item {logisticActivation}
+    \subitem {NeuralNet}, \hyperpage{9}
+
+  \indexspace
+
+  \item {NeuralNet}, \hyperpage{8}
+    \subitem {calculateLocalGradients}, \hyperpage{9}
+    \subitem {calculateNeuronValues}, \hyperpage{9}
+    \subitem {compute}, \hyperpage{9}
+    \subitem {desiredOutput}, \hyperpage{10}
+    \subitem {hidden}, \hyperpage{10}
+    \subitem {input}, \hyperpage{10}
+    \subitem {inputData}, \hyperpage{10}
+    \subitem {logisticActivation}, \hyperpage{9}
+    \subitem {NeuralNet}, \hyperpage{8}
+    \subitem {numHidden}, \hyperpage{10}
+    \subitem {numInput}, \hyperpage{10}
+    \subitem {numOutput}, \hyperpage{10}
+    \subitem {output}, \hyperpage{10}
+    \subitem {train}, \hyperpage{8}
+    \subitem {trainingInput}, \hyperpage{10}
+  \item {Neuron}, \hyperpage{12}
+    \subitem {$\sim $Neuron}, \hyperpage{12}
+    \subitem {bias}, \hyperpage{12}
+    \subitem {biasWeight}, \hyperpage{12}
+    \subitem {error}, \hyperpage{13}
+    \subitem {Neuron}, \hyperpage{12}
+    \subitem {value}, \hyperpage{12}
   \item {neurons}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{7}
+    \subitem {GenericLayer}, \hyperpage{7}
+  \item {numHidden}
+    \subitem {NeuralNet}, \hyperpage{10}
+  \item {numInput}
+    \subitem {NeuralNet}, \hyperpage{10}
   \item {numNeurons}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{7}
+    \subitem {GenericLayer}, \hyperpage{7}
+  \item {numOutput}
+    \subitem {NeuralNet}, \hyperpage{10}
+
+  \indexspace
+
+  \item {output}
+    \subitem {NeuralNet}, \hyperpage{10}
 
   \indexspace
 
   \item {parentLayer}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{7}
+    \subitem {GenericLayer}, \hyperpage{7}
 
   \indexspace
 
-  \item {src/GenericLayer.cpp}, \hyperpage{11}
-  \item {src/GenericLayer.h}, \hyperpage{12}
-  \item {src/Neuron.cpp}, \hyperpage{13}
-  \item {src/Neuron.h}, \hyperpage{14}
+  \item {src/GenericLayer.cpp}, \hyperpage{15}
+  \item {src/GenericLayer.h}, \hyperpage{16}
+  \item {src/NeuralNet.cpp}, \hyperpage{17}
+  \item {src/NeuralNet.h}, \hyperpage{18}
+  \item {src/Neuron.cpp}, \hyperpage{19}
+  \item {src/Neuron.h}, \hyperpage{20}
+
+  \indexspace
+
+  \item {train}
+    \subitem {NeuralNet}, \hyperpage{8}
+  \item {trainingInput}
+    \subitem {NeuralNet}, \hyperpage{10}
 
   \indexspace
 
   \item {value}
-    \subitem {Neuron}, \hyperpage{8}
+    \subitem {Neuron}, \hyperpage{12}
 
   \indexspace
 
   \item {weights}
-    \subitem {Generic\discretionary {-}{}{}Layer}, \hyperpage{7}
+    \subitem {GenericLayer}, \hyperpage{7}
 
 \end{theindex}

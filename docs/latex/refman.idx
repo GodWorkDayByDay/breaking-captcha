@@ -1,36 +1,71 @@
 \indexentry{GenericLayer@{GenericLayer}|hyperpage}{5}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!GenericLayer@{GenericLayer}|hyperpage}{6}
-\indexentry{GenericLayer@{GenericLayer}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{6}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!\nobreakspace  {}GenericLayer@{$\sim $GenericLayer}|hyperpage}{6}
-\indexentry{\nobreakspace  {}GenericLayer@{$\sim $GenericLayer}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{6}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!initWeights@{initWeights}|hyperpage}{6}
-\indexentry{initWeights@{initWeights}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{6}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!initNeurons@{initNeurons}|hyperpage}{6}
-\indexentry{initNeurons@{initNeurons}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{6}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!parentLayer@{parentLayer}|hyperpage}{7}
-\indexentry{parentLayer@{parentLayer}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{7}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!childLayer@{childLayer}|hyperpage}{7}
-\indexentry{childLayer@{childLayer}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{7}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!neurons@{neurons}|hyperpage}{7}
-\indexentry{neurons@{neurons}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{7}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!numNeurons@{numNeurons}|hyperpage}{7}
-\indexentry{numNeurons@{numNeurons}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{7}
-\indexentry{GenericLayer@{Generic\discretionary {-}{}{}Layer}!weights@{weights}|hyperpage}{7}
-\indexentry{weights@{weights}!GenericLayer@{Generic\discretionary {-}{}{}Layer}|hyperpage}{7}
-\indexentry{Neuron@{Neuron}|hyperpage}{8}
-\indexentry{Neuron@{Neuron}!Neuron@{Neuron}|hyperpage}{8}
-\indexentry{Neuron@{Neuron}!Neuron@{Neuron}|hyperpage}{8}
-\indexentry{Neuron@{Neuron}!\nobreakspace  {}Neuron@{$\sim $Neuron}|hyperpage}{8}
-\indexentry{\nobreakspace  {}Neuron@{$\sim $Neuron}!Neuron@{Neuron}|hyperpage}{8}
-\indexentry{Neuron@{Neuron}!value@{value}|hyperpage}{8}
-\indexentry{value@{value}!Neuron@{Neuron}|hyperpage}{8}
-\indexentry{Neuron@{Neuron}!bias@{bias}|hyperpage}{8}
-\indexentry{bias@{bias}!Neuron@{Neuron}|hyperpage}{8}
-\indexentry{Neuron@{Neuron}!biasWeight@{biasWeight}|hyperpage}{9}
-\indexentry{biasWeight@{biasWeight}!Neuron@{Neuron}|hyperpage}{9}
-\indexentry{Neuron@{Neuron}!error@{error}|hyperpage}{9}
-\indexentry{error@{error}!Neuron@{Neuron}|hyperpage}{9}
-\indexentry{src/GenericLayer.cpp@{src/GenericLayer.cpp}|hyperpage}{11}
-\indexentry{src/GenericLayer.h@{src/GenericLayer.h}|hyperpage}{12}
-\indexentry{src/Neuron.cpp@{src/Neuron.cpp}|hyperpage}{13}
-\indexentry{src/Neuron.h@{src/Neuron.h}|hyperpage}{14}
+\indexentry{GenericLayer@{GenericLayer}!GenericLayer@{GenericLayer}|hyperpage}{6}
+\indexentry{GenericLayer@{GenericLayer}!GenericLayer@{GenericLayer}|hyperpage}{6}
+\indexentry{GenericLayer@{GenericLayer}!\nobreakspace  {}GenericLayer@{$\sim $GenericLayer}|hyperpage}{6}
+\indexentry{\nobreakspace  {}GenericLayer@{$\sim $GenericLayer}!GenericLayer@{GenericLayer}|hyperpage}{6}
+\indexentry{GenericLayer@{GenericLayer}!initWeights@{initWeights}|hyperpage}{6}
+\indexentry{initWeights@{initWeights}!GenericLayer@{GenericLayer}|hyperpage}{6}
+\indexentry{GenericLayer@{GenericLayer}!initNeurons@{initNeurons}|hyperpage}{6}
+\indexentry{initNeurons@{initNeurons}!GenericLayer@{GenericLayer}|hyperpage}{6}
+\indexentry{GenericLayer@{GenericLayer}!init@{init}|hyperpage}{7}
+\indexentry{init@{init}!GenericLayer@{GenericLayer}|hyperpage}{7}
+\indexentry{GenericLayer@{GenericLayer}!parentLayer@{parentLayer}|hyperpage}{7}
+\indexentry{parentLayer@{parentLayer}!GenericLayer@{GenericLayer}|hyperpage}{7}
+\indexentry{GenericLayer@{GenericLayer}!childLayer@{childLayer}|hyperpage}{7}
+\indexentry{childLayer@{childLayer}!GenericLayer@{GenericLayer}|hyperpage}{7}
+\indexentry{GenericLayer@{GenericLayer}!neurons@{neurons}|hyperpage}{7}
+\indexentry{neurons@{neurons}!GenericLayer@{GenericLayer}|hyperpage}{7}
+\indexentry{GenericLayer@{GenericLayer}!numNeurons@{numNeurons}|hyperpage}{7}
+\indexentry{numNeurons@{numNeurons}!GenericLayer@{GenericLayer}|hyperpage}{7}
+\indexentry{GenericLayer@{GenericLayer}!weights@{weights}|hyperpage}{7}
+\indexentry{weights@{weights}!GenericLayer@{GenericLayer}|hyperpage}{7}
+\indexentry{NeuralNet@{NeuralNet}|hyperpage}{8}
+\indexentry{NeuralNet@{NeuralNet}!NeuralNet@{NeuralNet}|hyperpage}{8}
+\indexentry{NeuralNet@{NeuralNet}!NeuralNet@{NeuralNet}|hyperpage}{8}
+\indexentry{NeuralNet@{NeuralNet}!train@{train}|hyperpage}{8}
+\indexentry{train@{train}!NeuralNet@{NeuralNet}|hyperpage}{8}
+\indexentry{NeuralNet@{NeuralNet}!compute@{compute}|hyperpage}{9}
+\indexentry{compute@{compute}!NeuralNet@{NeuralNet}|hyperpage}{9}
+\indexentry{NeuralNet@{NeuralNet}!calculateNeuronValues@{calculateNeuronValues}|hyperpage}{9}
+\indexentry{calculateNeuronValues@{calculateNeuronValues}!NeuralNet@{NeuralNet}|hyperpage}{9}
+\indexentry{NeuralNet@{NeuralNet}!logisticActivation@{logisticActivation}|hyperpage}{9}
+\indexentry{logisticActivation@{logisticActivation}!NeuralNet@{NeuralNet}|hyperpage}{9}
+\indexentry{NeuralNet@{NeuralNet}!calculateLocalGradients@{calculateLocalGradients}|hyperpage}{9}
+\indexentry{calculateLocalGradients@{calculateLocalGradients}!NeuralNet@{NeuralNet}|hyperpage}{9}
+\indexentry{NeuralNet@{NeuralNet}!input@{input}|hyperpage}{10}
+\indexentry{input@{input}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!hidden@{hidden}|hyperpage}{10}
+\indexentry{hidden@{hidden}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!output@{output}|hyperpage}{10}
+\indexentry{output@{output}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!numInput@{numInput}|hyperpage}{10}
+\indexentry{numInput@{numInput}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!numHidden@{numHidden}|hyperpage}{10}
+\indexentry{numHidden@{numHidden}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!numOutput@{numOutput}|hyperpage}{10}
+\indexentry{numOutput@{numOutput}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!trainingInput@{trainingInput}|hyperpage}{10}
+\indexentry{trainingInput@{trainingInput}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!desiredOutput@{desiredOutput}|hyperpage}{10}
+\indexentry{desiredOutput@{desiredOutput}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{NeuralNet@{NeuralNet}!inputData@{inputData}|hyperpage}{10}
+\indexentry{inputData@{inputData}!NeuralNet@{NeuralNet}|hyperpage}{10}
+\indexentry{Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!\nobreakspace  {}Neuron@{$\sim $Neuron}|hyperpage}{12}
+\indexentry{\nobreakspace  {}Neuron@{$\sim $Neuron}!Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!value@{value}|hyperpage}{12}
+\indexentry{value@{value}!Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!bias@{bias}|hyperpage}{12}
+\indexentry{bias@{bias}!Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!biasWeight@{biasWeight}|hyperpage}{12}
+\indexentry{biasWeight@{biasWeight}!Neuron@{Neuron}|hyperpage}{12}
+\indexentry{Neuron@{Neuron}!error@{error}|hyperpage}{13}
+\indexentry{error@{error}!Neuron@{Neuron}|hyperpage}{13}
+\indexentry{src/GenericLayer.cpp@{src/GenericLayer.cpp}|hyperpage}{15}
+\indexentry{src/GenericLayer.h@{src/GenericLayer.h}|hyperpage}{16}
+\indexentry{src/NeuralNet.cpp@{src/NeuralNet.cpp}|hyperpage}{17}
+\indexentry{src/NeuralNet.h@{src/NeuralNet.h}|hyperpage}{18}
+\indexentry{src/Neuron.cpp@{src/Neuron.cpp}|hyperpage}{19}
+\indexentry{src/Neuron.h@{src/Neuron.h}|hyperpage}{20}

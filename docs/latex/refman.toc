@@ -1,38 +1,63 @@
-\contentsline {chapter}{\numberline {1}Breaking\discretionary {-}{}{}Captcha Class Index}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Breaking\discretionary {-}{}{}Captcha Class List}{1}{section.1.1}
-\contentsline {chapter}{\numberline {2}Breaking\discretionary {-}{}{}Captcha File Index}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Breaking\discretionary {-}{}{}Captcha File List}{3}{section.2.1}
-\contentsline {chapter}{\numberline {3}Breaking\discretionary {-}{}{}Captcha Class Documentation}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}Generic\discretionary {-}{}{}Layer Class Reference}{5}{section.3.1}
+\contentsline {chapter}{\numberline {1}BreakingCaptcha Class Index}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}BreakingCaptcha Class List}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}BreakingCaptcha File Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}BreakingCaptcha File List}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}BreakingCaptcha Class Documentation}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}GenericLayer Class Reference}{5}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Detailed Description}{5}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}Constructor \& Destructor Documentation}{6}{subsection.3.1.2}
-\contentsline {subsubsection}{\numberline {3.1.2.1}GenericLayer}{6}{subsubsection.3.1.2.1}
-\contentsline {subsubsection}{\numberline {3.1.2.2}$\sim $GenericLayer}{6}{subsubsection.3.1.2.2}
+\contentsline {subsubsection}{\numberline {3.1.2.1}\setlength {\rightskip }{0pt plus 5cm}GenericLayer::GenericLayer (int {\em numNeurons}, {\bf GenericLayer} $\ast $ {\em parent}, {\bf GenericLayer} $\ast $ {\em child})}{6}{subsubsection.3.1.2.1}
+\contentsline {subsubsection}{\numberline {3.1.2.2}\setlength {\rightskip }{0pt plus 5cm}GenericLayer::$\sim $GenericLayer ()\hspace {0.3cm}{\tt \unhbox \voidb@x \hbox {[}virtual\unhbox \voidb@x \hbox {]}}}{6}{subsubsection.3.1.2.2}
 \contentsline {subsection}{\numberline {3.1.3}Member Function Documentation}{6}{subsection.3.1.3}
-\contentsline {subsubsection}{\numberline {3.1.3.1}initWeights}{6}{subsubsection.3.1.3.1}
-\contentsline {subsubsection}{\numberline {3.1.3.2}initNeurons}{6}{subsubsection.3.1.3.2}
+\contentsline {subsubsection}{\numberline {3.1.3.1}\setlength {\rightskip }{0pt plus 5cm}void GenericLayer::initWeights ()}{6}{subsubsection.3.1.3.1}
+\contentsline {subsubsection}{\numberline {3.1.3.2}\setlength {\rightskip }{0pt plus 5cm}void GenericLayer::initNeurons ()}{6}{subsubsection.3.1.3.2}
+\contentsline {subsubsection}{\numberline {3.1.3.3}\setlength {\rightskip }{0pt plus 5cm}void GenericLayer::init ()}{7}{subsubsection.3.1.3.3}
 \contentsline {subsection}{\numberline {3.1.4}Member Data Documentation}{7}{subsection.3.1.4}
-\contentsline {subsubsection}{\numberline {3.1.4.1}parentLayer}{7}{subsubsection.3.1.4.1}
-\contentsline {subsubsection}{\numberline {3.1.4.2}childLayer}{7}{subsubsection.3.1.4.2}
-\contentsline {subsubsection}{\numberline {3.1.4.3}neurons}{7}{subsubsection.3.1.4.3}
-\contentsline {subsubsection}{\numberline {3.1.4.4}numNeurons}{7}{subsubsection.3.1.4.4}
-\contentsline {subsubsection}{\numberline {3.1.4.5}weights}{7}{subsubsection.3.1.4.5}
-\contentsline {section}{\numberline {3.2}Neuron Class Reference}{8}{section.3.2}
+\contentsline {subsubsection}{\numberline {3.1.4.1}\setlength {\rightskip }{0pt plus 5cm}{\bf GenericLayer}$\ast $ {\bf GenericLayer::parentLayer}}{7}{subsubsection.3.1.4.1}
+\contentsline {subsubsection}{\numberline {3.1.4.2}\setlength {\rightskip }{0pt plus 5cm}{\bf GenericLayer}$\ast $ {\bf GenericLayer::childLayer}}{7}{subsubsection.3.1.4.2}
+\contentsline {subsubsection}{\numberline {3.1.4.3}\setlength {\rightskip }{0pt plus 5cm}{\bf Neuron}$\ast $ {\bf GenericLayer::neurons}}{7}{subsubsection.3.1.4.3}
+\contentsline {subsubsection}{\numberline {3.1.4.4}\setlength {\rightskip }{0pt plus 5cm}int {\bf GenericLayer::numNeurons}}{7}{subsubsection.3.1.4.4}
+\contentsline {subsubsection}{\numberline {3.1.4.5}\setlength {\rightskip }{0pt plus 5cm}double$\ast $$\ast $ {\bf GenericLayer::weights}}{7}{subsubsection.3.1.4.5}
+\contentsline {section}{\numberline {3.2}NeuralNet Class Reference}{8}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Detailed Description}{8}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Constructor \& Destructor Documentation}{8}{subsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.2.1}Neuron}{8}{subsubsection.3.2.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2.2}$\sim $Neuron}{8}{subsubsection.3.2.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Member Data Documentation}{8}{subsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.3.1}value}{8}{subsubsection.3.2.3.1}
-\contentsline {subsubsection}{\numberline {3.2.3.2}bias}{9}{subsubsection.3.2.3.2}
-\contentsline {subsubsection}{\numberline {3.2.3.3}biasWeight}{9}{subsubsection.3.2.3.3}
-\contentsline {subsubsection}{\numberline {3.2.3.4}error}{9}{subsubsection.3.2.3.4}
-\contentsline {chapter}{\numberline {4}Breaking\discretionary {-}{}{}Captcha File Documentation}{11}{chapter.4}
-\contentsline {section}{\numberline {4.1}src/Generic\discretionary {-}{}{}Layer.cpp File Reference}{11}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{11}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}src/Generic\discretionary {-}{}{}Layer.h File Reference}{12}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{12}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}src/Neuron.cpp File Reference}{13}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{13}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}src/Neuron.h File Reference}{14}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{14}{subsection.4.4.1}
+\contentsline {subsubsection}{\numberline {3.2.2.1}\setlength {\rightskip }{0pt plus 5cm}NeuralNet::NeuralNet (int {\em numInput}, int {\em numHidden}, int {\em numOutput})}{8}{subsubsection.3.2.2.1}
+\contentsline {subsection}{\numberline {3.2.3}Member Function Documentation}{8}{subsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.3.1}\setlength {\rightskip }{0pt plus 5cm}void NeuralNet::train ()}{8}{subsubsection.3.2.3.1}
+\contentsline {subsubsection}{\numberline {3.2.3.2}\setlength {\rightskip }{0pt plus 5cm}void NeuralNet::compute ()}{9}{subsubsection.3.2.3.2}
+\contentsline {subsubsection}{\numberline {3.2.3.3}\setlength {\rightskip }{0pt plus 5cm}void NeuralNet::calculateNeuronValues ({\bf GenericLayer} $\ast $ {\em layer})}{9}{subsubsection.3.2.3.3}
+\contentsline {subsubsection}{\numberline {3.2.3.4}\setlength {\rightskip }{0pt plus 5cm}double NeuralNet::logisticActivation (double {\em x})}{9}{subsubsection.3.2.3.4}
+\contentsline {subsubsection}{\numberline {3.2.3.5}\setlength {\rightskip }{0pt plus 5cm}void NeuralNet::calculateLocalGradients ({\bf GenericLayer} $\ast $ {\em layer})}{9}{subsubsection.3.2.3.5}
+\contentsline {subsection}{\numberline {3.2.4}Member Data Documentation}{10}{subsection.3.2.4}
+\contentsline {subsubsection}{\numberline {3.2.4.1}\setlength {\rightskip }{0pt plus 5cm}{\bf GenericLayer}$\ast $ {\bf NeuralNet::input}}{10}{subsubsection.3.2.4.1}
+\contentsline {subsubsection}{\numberline {3.2.4.2}\setlength {\rightskip }{0pt plus 5cm}{\bf GenericLayer}$\ast $ {\bf NeuralNet::hidden}}{10}{subsubsection.3.2.4.2}
+\contentsline {subsubsection}{\numberline {3.2.4.3}\setlength {\rightskip }{0pt plus 5cm}{\bf GenericLayer}$\ast $ {\bf NeuralNet::output}}{10}{subsubsection.3.2.4.3}
+\contentsline {subsubsection}{\numberline {3.2.4.4}\setlength {\rightskip }{0pt plus 5cm}int {\bf NeuralNet::numInput}}{10}{subsubsection.3.2.4.4}
+\contentsline {subsubsection}{\numberline {3.2.4.5}\setlength {\rightskip }{0pt plus 5cm}int {\bf NeuralNet::numHidden}}{10}{subsubsection.3.2.4.5}
+\contentsline {subsubsection}{\numberline {3.2.4.6}\setlength {\rightskip }{0pt plus 5cm}int {\bf NeuralNet::numOutput}}{10}{subsubsection.3.2.4.6}
+\contentsline {subsubsection}{\numberline {3.2.4.7}\setlength {\rightskip }{0pt plus 5cm}double$\ast $ {\bf NeuralNet::trainingInput}}{10}{subsubsection.3.2.4.7}
+\contentsline {subsubsection}{\numberline {3.2.4.8}\setlength {\rightskip }{0pt plus 5cm}double$\ast $ {\bf NeuralNet::desiredOutput}}{10}{subsubsection.3.2.4.8}
+\contentsline {subsubsection}{\numberline {3.2.4.9}\setlength {\rightskip }{0pt plus 5cm}double$\ast $ {\bf NeuralNet::inputData}}{11}{subsubsection.3.2.4.9}
+\contentsline {section}{\numberline {3.3}Neuron Class Reference}{12}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{12}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Constructor \& Destructor Documentation}{12}{subsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.2.1}\setlength {\rightskip }{0pt plus 5cm}Neuron::Neuron ()}{12}{subsubsection.3.3.2.1}
+\contentsline {subsubsection}{\numberline {3.3.2.2}\setlength {\rightskip }{0pt plus 5cm}Neuron::$\sim $Neuron ()\hspace {0.3cm}{\tt \unhbox \voidb@x \hbox {[}virtual\unhbox \voidb@x \hbox {]}}}{12}{subsubsection.3.3.2.2}
+\contentsline {subsection}{\numberline {3.3.3}Member Data Documentation}{12}{subsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.3.1}\setlength {\rightskip }{0pt plus 5cm}double {\bf Neuron::value}}{12}{subsubsection.3.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.3.2}\setlength {\rightskip }{0pt plus 5cm}double {\bf Neuron::bias}}{12}{subsubsection.3.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3.3}\setlength {\rightskip }{0pt plus 5cm}double {\bf Neuron::biasWeight}}{13}{subsubsection.3.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.3.4}\setlength {\rightskip }{0pt plus 5cm}double {\bf Neuron::error}}{13}{subsubsection.3.3.3.4}
+\contentsline {chapter}{\numberline {4}BreakingCaptcha File Documentation}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}src/GenericLayer.cpp File Reference}{15}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{15}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}src/GenericLayer.h File Reference}{16}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{16}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}src/NeuralNet.cpp File Reference}{17}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{17}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}src/NeuralNet.h File Reference}{18}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{18}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}src/Neuron.cpp File Reference}{19}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{19}{subsection.4.5.1}
+\contentsline {section}{\numberline {4.6}src/Neuron.h File Reference}{20}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{20}{subsection.4.6.1}

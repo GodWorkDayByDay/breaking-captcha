@@ -22,6 +22,11 @@ class NeuralNet
 {
 public:
 	NeuralNet(int numInput, int numHidden, int numOutput);
+	void train();
+	void compute();
+	void calculateNeuronValues(GenericLayer* layer);
+	double logisticActivation(double x);
+	void calculateLocalGradients(GenericLayer* layer);
 	
 	GenericLayer* input; /**< The input layer to the neural network. **/
 	GenericLayer* hidden; /**< The hidden layer to the neural network. **/
@@ -31,8 +36,8 @@ public:
 	int numHidden; /**< The number of hidden neurons to create. **/
 	int numOutput; /**< The number of output neurons to create. **/
 	
-	double** trainingInput; /**< The data, in a 2D array, that the network will be trained against. Each index will be a set of data, and each sub-index will be a data point such that trainingData[i][j] represents trainging sample i and datum j. **/
-	double** desiredValues; /**< The expected results from the training data. Each (i,j) element is related to each neuron's expected value, such that index (i) is the set of expected values for the entire set of neurons based on the calculations done from trainingData[i]. **/
+	double* trainingInput; /**< The data that the network will be trained against. Each index corresponds to an input neuron. This is used in conjuction with desiredValues to train the network. **/
+	double* desiredOutput; /**< The expected results from the training data. Each element is related to each output neuron's expected value **/
 	double* inputData; /**< The data to be calculated from the environment, in the same form as each set of data in trainingData. **/
 };
 

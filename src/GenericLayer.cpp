@@ -9,7 +9,8 @@
 
 #include "GenericLayer.h"
 #include <omp.h>
-#include <cstring>
+#include <cstdlib>
+#include <math.h>
 
 /**
  * Defines the constructor for the generic neural layer.
@@ -94,3 +95,5 @@ GenericLayer::~GenericLayer() {
 	delete[] this->weights;
 	delete[] this->neurons;
 }
+
+
