@@ -1,0 +1,23 @@
+\form#0:$displaystyle\sum_{i=0}^n x[i]w[j,i]$
+\form#1:$\displaystyle\sum_{i=0}^n x[i]w[j,i]$
+\form#2:$\displaystyle\sum_{i=0}^n x_i(n)w_{ji}(n)$
+\form#3:$y_i$
+\form#4:$w_{ji}$
+\form#5:$\displaystyle v_j(n) = \sum_{i=0}^n y_i(n)w_{ji}(n)$
+\form#6:$y_j = \gamma_j(v_j(n))$
+\form#7:$\gamma_j()$
+\form#8:$y_j = \phi_j(v_j(n))$
+\form#9:$\phi_j()$
+\form#10:$y(n)_j = \phi_j(v_j(n))$
+\form#11:$\phi_j(x) = 1/(1 + \exp(-x))$
+\form#12:$\phi_j(x) = \frac{1}{1 + exp(-x)}$
+\form#13:$\displaystyle\phi_j(x) = \frac{1}{1 + exp(-x)}$
+\form#14:$\displaystyle\gamma_j(n) = e_j(n)\phi_j^`(v_j(n))$
+\form#15:$\displaystyle\gamma_j(n) = \phi_j^`(v_j(n))\sum_k^m \gamma_k(n)w_kj(n)$
+\form#16:$\displaystyle\gamma_j(n) = \phi_j^`(v_j(n))\sum_k^m \gamma_k(n)w_{kj}(n)$
+\form#17:$\displaystyle\gamma_j(n) = \phi_j^`(v_j(n))\sum_{k=0}^m \gamma_k(n)w_{kj}(n)$
+\form#18:$\displaystyle w_{ij} = \eta*e_j(n)^2$
+\form#19:$\eta$
+\form#20:$e_j(n)$
+\form#21:$\displaystyle \delta w_{ij}(n) = \eta e_j(n)^2$
+\form#22:$\displaystyle \Delta w_{ij}(n) = \eta e_j(n)^2$

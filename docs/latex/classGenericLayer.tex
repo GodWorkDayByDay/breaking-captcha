@@ -28,7 +28,7 @@ void \hyperlink{classGenericLayer_716fbf0e6e01271f9ae648dcf1bcccd9}{init} ()
 \item 
 int \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{numNeurons}
 \item 
-double $\ast$ \hyperlink{classGenericLayer_01148a903b47b9329e0378274fe5a492}{weights}
+double $\ast$$\ast$ \hyperlink{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}{weights}
 \end{CompactItemize}
 
 
@@ -82,7 +82,7 @@ Deallocates the memory from the neuron and weight arrays.
 \label{classGenericLayer_2e2e170339c48bbcfe05afe9a1f60e43}
 
 
-Initialize the weights array, but only if we are in a layer with a child because they are responsible for keeping track of the weights. The number of total entries should number GenericLayer.childLayer.numNeurons. The weights are all initialized to zero before training. \begin{Desc}
+Initialize the weights array, but only if we are in a layer with a child because they are responsible for keeping track of the weights. The number of total entries should number \hyperlink{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}{GenericLayer.numNeurons}$\ast$GenericLayer.childLayer.numNeurons. The weights are all initialized to zero before training. \begin{Desc}
 \item[Postcondition:]The array containing the weights for each neuron is allocated and has been filled with zeros. It is ready to be trained. \end{Desc}
 \hypertarget{classGenericLayer_c9357145e80d180b812df7bddeb5139d}{
 \index{GenericLayer@{GenericLayer}!initNeurons@{initNeurons}}
@@ -139,14 +139,14 @@ The array of neurons that populate this layer of the network. \hypertarget{class
 \label{classGenericLayer_7b45631903aa50e67fe5a1947fc292bd}
 
 
-The number of neurons to create in this layer. \hypertarget{classGenericLayer_01148a903b47b9329e0378274fe5a492}{
+The number of neurons to create in this layer. \hypertarget{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}{
 \index{GenericLayer@{GenericLayer}!weights@{weights}}
 \index{weights@{weights}!GenericLayer@{GenericLayer}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ {\bf GenericLayer::weights}}}
-\label{classGenericLayer_01148a903b47b9329e0378274fe5a492}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ {\bf GenericLayer::weights}}}
+\label{classGenericLayer_e75dc38537415bb12a60fbbbbb4b3d75}
 
 
-The array of weights with as many entries as there are neurons in the child layer. If there is no child layer then it remains NULL. 
+The 2D array of weights with dimensions of this layer's numNeurons by the child layer's numNeruons. If there is no child layer then it remains NULL. 
 
 The documentation for this class was generated from the following files:\begin{CompactItemize}
 \item 
