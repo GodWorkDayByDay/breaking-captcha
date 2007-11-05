@@ -16,6 +16,7 @@ Neuron::Neuron() {
 	this->bias = 1;
 	this->biasWeight = 0;
 	this->error = 0.0;
+	this->localGradient = 0;
 }
 
 /** Neuron class desctructor. **/

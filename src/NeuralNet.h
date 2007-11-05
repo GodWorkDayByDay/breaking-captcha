@@ -26,7 +26,12 @@ public:
 	void compute();
 	void calculateNeuronValues(GenericLayer* layer);
 	double logisticActivation(double x);
-	void calculateLocalGradients(GenericLayer* layer);
+	void alterWeights(GenericLayer* layer);
+	double calculateMSE();
+	
+	double learningRate = 0.25; /**< This variable controls the rate at which the network learns. It is responsible for smoothing out the learning functions. **/
+	int maxTrainingIterations = 1000; /**< The max number of iterations to compute while training. **/
+	double percentChange = 0.01; /**< When to stop the training based on each epoch's mean squared error. A percentage of the rate of change. **/
 	
 	GenericLayer* input; /**< The input layer to the neural network. **/
 	GenericLayer* hidden; /**< The hidden layer to the neural network. **/
@@ -36,7 +41,6 @@ public:
 	int numHidden; /**< The number of hidden neurons to create. **/
 	int numOutput; /**< The number of output neurons to create. **/
 	
-	double* trainingInput; /**< The data that the network will be trained against. Each index corresponds to an input neuron. This is used in conjuction with desiredValues to train the network. **/
 	double* desiredOutput; /**< The expected results from the training data. Each element is related to each output neuron's expected value **/
 	double* inputData; /**< The data to be calculated from the environment, in the same form as each set of data in trainingData. **/
 };

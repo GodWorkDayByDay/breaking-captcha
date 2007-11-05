@@ -8,6 +8,7 @@
 
 #include "NeuralNet.h"
 #include <cstdlib>
+#include <math>
 
 /**
  * @param numInput The number of neurons to create in the input layer.
@@ -36,7 +37,34 @@ NeuralNet::NeuralNet(int numInput, int numHidden, int numOutput) {
  * @post All the weights and biases are set according to the trainingData and the NN is ready for real environment data. 
 **/
 void NeuralNet::train() {
+	int iteration=0;
+	double currentMSE=1, lastMSE=1; 
 	
+	// either stop training when we have reached a maximum acceptable number of iterations
+	// or when the actual and desired responses are significantly close based on the rate of change
+	while ( ((abs((currentMSE-lastMSE)/currentMSE)) > this->percentChange) and (iteration < this->maxTrainingIterations) ) {
+		this->compute();
+		
+		this->alterWeights(this->output);
+		this->alterWeights(this->hidden);
+		
+		++iteration;
+		lastMSE = currentMSE;
+		currentMSE = this->calculateMSE();
+	}
+}
+
+/**
+ * @return The mean squared error of the output layer.
+**/
+double NeuralNet::calculateMSE() {
+	double sum=0;
+	
+	#pragma omp parallel
+	for (int i=0; i<this->input->numNeurons; ++i) {
+		sum += pow(this->input->neurons[i]->error, 2);
+	}
+	return sum;
 }
 
 /**
@@ -44,7 +72,9 @@ void NeuralNet::train() {
  * @post The output layer nodes now contain, based on the NN's weights and biases, the output values for the given data set.
 **/
 void NeuralNet::compute() {
-	
+	this->calculateNeuronValues(this->input);
+	this->calculateNeuronValues(this->hidden);
+	this->calculateNeuronValues(this->output);
 }
 
 /**
@@ -62,18 +92,24 @@ void NeuralNet::compute() {
  * where \f$\phi_j()\f$ is the activation function on neuron j.
 **/
 void NeuralNet::calculateNeuronValues(GenericLayer* layer) {
-	if ( layer->parentLayer == NULL ) return;
 	double tmp=0;
+	
+	// simply put the inputData into the input layer
+	if ( layer->parentLayer == NULL ) {
+		#pragma omp parallel
+		for (int i=0; i<layer->numNeurons; ++i) {
+			layer->neurons[i] = this->inputData[i];
+		}
+	}
 	
 	#pragma omp parallel
 	for (int i=0; i<layer->numNeurons; ++i) {
 		#pragma omp parallel
 		for (int j=0; j<layer->parentLayer->numNeurons; ++j) {
-			// sum(n(j)*w(j,i))
-			tmp += layer->parentLayer->neurons[j].value * layer->parentLayer->weights[j][i];
+			tmp += layer->parentLayer->neurons[j].value * layer->parentLayer->weights[i];
 		}
 		// addition of the bias term, wich is essentially the j+1 weight on i
-		tmp += layer->parentLayer->neurons[i].bias * layer->parentLayer->neurons[i].biasWeight
+		tmp += layer->neurons[i].bias * layer->neurons[i].biasWeight
 		
 		// if this is the output layer then we just pass the value through a linear activation
 		// function, ie y(i) = x.
@@ -127,16 +163,51 @@ double NeuralNet::logisticActivation(double x) {
  * 
  * @param layer The layer for which we are to calculate the errors.
 **/
-void NeuralNet::calculateLocalGradients(GenericLayer* layer) {
+void NeuralNet::alterWeights(GenericLayer* layer) {
+	// do nothing if we for some reason try to alter the weights of the input layer
+	if ( layer->parentLayer == NULL ) return;
+	
 	// the case for the output layer is simply the disired-actual values.
-	if ( layer->childLayer == NULL ) {
+	else if ( layer->childLayer == NULL ) {
 		#pragma omp parallel
 		for (int i=0; i<layer->numNeurons; ++i) {
-			layer->neurons[i].error = this->desiredOutput[i] - layer->neurons[i].value;
+			// error = desired - actual
+			layer->neurons[i]->error = this->desiredOutput[i] - layer->neurons[i]->value;
+			layer->neurons[i]->localGradient = layer->neurons[i]->error * layer->neurons[i]->value; 
+		}
+		// we uncouple this loop from the previous to access the weight array in row-major order
+		#pragma omp parallel
+		for (int j=0; j<layer->parentLayer->numNeurons; ++j) {
+			#pragma omp parrallel
+			for (int i=0; i<layer->numNeurons; ++i) {
+				layer->parentLayer->weight[j][i] += this->learningRate * layer->neurons[j]->localGradient * layer->parentLayer.neurons[j].value;
+			}
 		}
 	}
+	
 	// the case for the hidden layer is the back propogation algorithm
-	else if ( layer->parentLayer != NULL ) {
+	else {
+		double sumGradientWeights;
 		
+		// loop to calculate all of the new weights from the parent layer to this layer (i to j)
+		#pragma omp parallel
+		for (int j=0; j<layer->numNeurons; j++) {
+			sumGradientWeights = 0;
+			// summing up the gradients of the child layer and the weights connecting them
+			#pragma omp parallel
+			for (int k=0; k<layer->childLayer->numNeurons; ++k) {
+				sumGradientWeights += layer->childLayer->neurons[k]->localGradient * layer->weights[j][k];
+			}
+			// now that we have the sum of those gradients we can calculate this neuron's gradient
+			layer->neurons[j]->localGradient = layer->neurons[j].value * (1-layer->neurons[j]->value) * sumGradientWeights;
+			
+			// now that we have the local gradient we can change the weights between this neuron and those neurons connected to it in the parent layer
+			#pragma omp parallel
+			for (int i=0; i<layer->parentLayer->numNeurons; ++i) {
+				layer->parentLayer->weight[i][j] += this->learningRate * layer->neurons[j]->localGradient * layer->parentLayer->neurons[i]->value;
+			}
+		}
 	}
 }
+
+
