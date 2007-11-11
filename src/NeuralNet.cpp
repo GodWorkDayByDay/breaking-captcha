@@ -8,7 +8,7 @@
 
 #include "NeuralNet.h"
 #include <cstdlib>
-#include <math>
+#include <math.h>
 
 /**
  * @param numInput The number of neurons to create in the input layer.
@@ -16,6 +16,10 @@
  * @param numOutput The number of neurons to create in the output layer.
 **/
 NeuralNet::NeuralNet(int numInput, int numHidden, int numOutput) {
+	this->learningRate = 0.25;
+	this->maxTrainingIterations = 1000;
+	this->percentChange = 0.01;
+	
 	// assign member variables
 	this->numInput = numInput;
 	this->numHidden = numHidden;
@@ -62,7 +66,7 @@ double NeuralNet::calculateMSE() {
 	
 	#pragma omp parallel
 	for (int i=0; i<this->input->numNeurons; ++i) {
-		sum += pow(this->input->neurons[i]->error, 2);
+		sum += pow(this->input->neurons[i].error, 2);
 	}
 	return sum;
 }
@@ -98,7 +102,7 @@ void NeuralNet::calculateNeuronValues(GenericLayer* layer) {
 	if ( layer->parentLayer == NULL ) {
 		#pragma omp parallel
 		for (int i=0; i<layer->numNeurons; ++i) {
-			layer->neurons[i] = this->inputData[i];
+			layer->neurons[i].value = this->inputData[i];
 		}
 	}
 	
@@ -106,20 +110,20 @@ void NeuralNet::calculateNeuronValues(GenericLayer* layer) {
 	for (int i=0; i<layer->numNeurons; ++i) {
 		#pragma omp parallel
 		for (int j=0; j<layer->parentLayer->numNeurons; ++j) {
-			tmp += layer->parentLayer->neurons[j].value * layer->parentLayer->weights[i];
+			tmp += layer->parentLayer->neurons[j].value * layer->parentLayer->weights[j][i];
 		}
 		// addition of the bias term, wich is essentially the j+1 weight on i
-		tmp += layer->neurons[i].bias * layer->neurons[i].biasWeight
+		tmp += layer->neurons[i].bias * layer->neurons[i].biasWeight;
 		
 		// if this is the output layer then we just pass the value through a linear activation
 		// function, ie y(i) = x.
 		if ( layer->childLayer == NULL ) {
-			layer->neurons[i] = tmp;
+			layer->neurons[i].value = tmp;
 		}
 		// otherwise we put it through the activation function of our choosing, in this case a
 		// logistic one that is easily differentiated
 		else {
-			layer->neurons[i] = layer->logisticActivation(tmp);
+			layer->neurons[i].value = this->logisticActivation(tmp);
 		}
 		tmp = 0;
 	}
@@ -172,15 +176,15 @@ void NeuralNet::alterWeights(GenericLayer* layer) {
 		#pragma omp parallel
 		for (int i=0; i<layer->numNeurons; ++i) {
 			// error = desired - actual
-			layer->neurons[i]->error = this->desiredOutput[i] - layer->neurons[i]->value;
-			layer->neurons[i]->localGradient = layer->neurons[i]->error * layer->neurons[i]->value; 
+			layer->neurons[i].error = this->desiredOutput[i] - layer->neurons[i].value;
+			layer->neurons[i].localGradient = layer->neurons[i].error * layer->neurons[i].value; 
 		}
 		// we uncouple this loop from the previous to access the weight array in row-major order
 		#pragma omp parallel
 		for (int j=0; j<layer->parentLayer->numNeurons; ++j) {
 			#pragma omp parrallel
 			for (int i=0; i<layer->numNeurons; ++i) {
-				layer->parentLayer->weight[j][i] += this->learningRate * layer->neurons[j]->localGradient * layer->parentLayer.neurons[j].value;
+				layer->parentLayer->weights[j][i] += this->learningRate * layer->neurons[j].localGradient * layer->parentLayer->neurons[j].value;
 			}
 		}
 	}
@@ -196,15 +200,15 @@ void NeuralNet::alterWeights(GenericLayer* layer) {
 			// summing up the gradients of the child layer and the weights connecting them
 			#pragma omp parallel
 			for (int k=0; k<layer->childLayer->numNeurons; ++k) {
-				sumGradientWeights += layer->childLayer->neurons[k]->localGradient * layer->weights[j][k];
+				sumGradientWeights += layer->childLayer->neurons[k].localGradient * layer->weights[j][k];
 			}
 			// now that we have the sum of those gradients we can calculate this neuron's gradient
-			layer->neurons[j]->localGradient = layer->neurons[j].value * (1-layer->neurons[j]->value) * sumGradientWeights;
+			layer->neurons[j].localGradient = layer->neurons[j].value * (1-layer->neurons[j].value) * sumGradientWeights;
 			
 			// now that we have the local gradient we can change the weights between this neuron and those neurons connected to it in the parent layer
 			#pragma omp parallel
 			for (int i=0; i<layer->parentLayer->numNeurons; ++i) {
-				layer->parentLayer->weight[i][j] += this->learningRate * layer->neurons[j]->localGradient * layer->parentLayer->neurons[i]->value;
+				layer->parentLayer->weights[i][j] += this->learningRate * layer->neurons[j].localGradient * layer->parentLayer->neurons[i].value;
 			}
 		}
 	}

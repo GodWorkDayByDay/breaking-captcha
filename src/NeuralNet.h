@@ -29,9 +29,9 @@ public:
 	void alterWeights(GenericLayer* layer);
 	double calculateMSE();
 	
-	double learningRate = 0.25; /**< This variable controls the rate at which the network learns. It is responsible for smoothing out the learning functions. **/
-	int maxTrainingIterations = 1000; /**< The max number of iterations to compute while training. **/
-	double percentChange = 0.01; /**< When to stop the training based on each epoch's mean squared error. A percentage of the rate of change. **/
+	double learningRate; /**< This variable controls the rate at which the network learns. It is responsible for smoothing out the learning functions. **/
+	int maxTrainingIterations; /**< The max number of iterations to compute while training. **/
+	double percentChange; /**< When to stop the training based on each epoch's mean squared error. A percentage of the rate of change. **/
 	
 	GenericLayer* input; /**< The input layer to the neural network. **/
 	GenericLayer* hidden; /**< The hidden layer to the neural network. **/

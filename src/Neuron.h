@@ -30,6 +30,7 @@ public:
 	double bias; /**< The bias of the neuron. **/
 	double biasWeight; /**< The weight of the bias on the neuron. **/
 	double error; /**< The error associated with the computation of the network versus the desired output. **/
+	double localGradient; /**< The local gradient associated with finding delta values for weight changes. **/
 };
 
 #endif /*NEURON_H_*/
