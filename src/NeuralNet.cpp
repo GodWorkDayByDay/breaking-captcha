@@ -82,6 +82,13 @@ void NeuralNet::compute() {
 }
 
 /**
+ * @return The array of output neurons resulting from a previous calculation.
+**/
+Neuron* NeuralNet::getOutput() {
+	return this->output->neurons;
+}
+
+/**
  * To calculate the value of each neuron we calculate the sum of the weights connected to each
  * neuron multiplied by the value of each corresponding neuronal value, finally adding the
  * adjusted bias and passing this value through an activation function.

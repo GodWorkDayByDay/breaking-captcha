@@ -1,4 +1,10 @@
-all: GenericLayer.o Neuron.o NeuralNet.o
+all: GenericLayer.o Neuron.o NeuralNet.o GuessCaptcha.o guess
+
+guess: guess.cpp
+	g++ guess.cpp -o guess
+
+GuessCaptcha.o: GuessCaptcha.cpp GuessCaptcha.h
+	g++ -c -fopenmp GuessCaptcha.cpp -o GuessCaptcha.o
 
 NeuralNet.o: NeuralNet.cpp NeuralNet.h
 	g++ -c -fopenmp NeuralNet.cpp -o NeuralNet.o

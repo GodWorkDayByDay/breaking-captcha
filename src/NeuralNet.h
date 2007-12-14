@@ -28,6 +28,7 @@ public:
 	double logisticActivation(double x);
 	void alterWeights(GenericLayer* layer);
 	double calculateMSE();
+	Neuron* getOutput();
 	
 	double learningRate; /**< This variable controls the rate at which the network learns. It is responsible for smoothing out the learning functions. **/
 	int maxTrainingIterations; /**< The max number of iterations to compute while training. **/
