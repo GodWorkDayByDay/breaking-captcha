@@ -7,7 +7,7 @@ using namespace std;
 using namespace TCLAP;
 
 int main(int argc, char** argv) {
-	GuessCaptcha* gc;
+	GuessCaptcha* gc = new GuessCaptcha();
 	
 	try {
 		// Define and parse the command line arguments.
@@ -24,14 +24,14 @@ int main(int argc, char** argv) {
 		gc->whiteThreshold = whiteThresholdArg.getValue();
 		gc->slicePixel = slicePixelArg.getValue();
 		
-	} catch (ArgException &e) { 
+	} catch (ArgException &e) {
 		cerr << "Error: " << e.error() << " for arg " << e.argId() << endl;
 	}
 	
 	// Start once all the instance variables have been assigned.
-	//gc->start();
-	//printf("I think the file you gave me says %s", gc->getGuess());
+	gc->start();
+	printf("I think the file you gave me says %s.\n", gc->getGuess().c_str());
 	
 	// testing
-	printf("inputFile = %s\nsegmentValue = %d\nwhiteThreshold = %d\nslicePixel = %d\n", gc->inputFile.c_str(), gc->segmentValue, gc->whiteThreshold, gc->slicePixel);
+	//printf("inputFile = %s\nsegmentValue = %d\nwhiteThreshold = %d\nslicePixel = %d\n", gc->inputFile.c_str(), gc->segmentValue, gc->whiteThreshold, gc->slicePixel);
 }

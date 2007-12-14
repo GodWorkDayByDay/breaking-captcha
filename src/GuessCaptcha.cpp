@@ -1,7 +1,14 @@
 #include "GuessCaptcha.h"
-#include <stdio.h>
+#include <string>
 
 GuessCaptcha::GuessCaptcha() {
-	int one=1;
+	return;
+}
+
+std::string GuessCaptcha::getGuess() {
+	return "something";
+}
+
+void GuessCaptcha::start() {
 	return;
 }
