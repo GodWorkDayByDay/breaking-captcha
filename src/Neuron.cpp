@@ -18,6 +18,3 @@ Neuron::Neuron() {
 	this->error = 0.0;
 	this->localGradient = 0;
 }
-
-/** Neuron class desctructor. **/
-Neuron::~Neuron() { }

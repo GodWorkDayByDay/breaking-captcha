@@ -25,7 +25,6 @@ class Neuron {
 public:
 	Neuron();
 	//Neuron(double value, double bias, double biasWeight);
-	virtual ~Neuron();
 	double value; /**< The value of the neuron. **/
 	double bias; /**< The bias of the neuron. **/
 	double biasWeight; /**< The weight of the bias on the neuron. **/
