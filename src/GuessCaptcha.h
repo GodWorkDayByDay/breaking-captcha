@@ -12,23 +12,20 @@ public:
 	/**
 	 * Segments the image with imagemagick by using the command line and
 	 * creating a new image. Segmentation values can be adjusted using
-	 * the related instance variables.
+	 * the related instance variables. In the same step the image is
+	 * also sliced on the pixels interval specified by slicePixel.
 	 */
-	void segmentImage();
-	/**
-	 * Slices the image; to begin it will simply cut on pixel values.
-	 */
-	void sliceImage();
+	void segmentImage() throw(char*);
 	/**
 	 * Resize each of the slices to the desired size of the neural network's input.
 	 * This should be fixed, as training data must also conform to this dimension.
 	 */
-	void resizeSlices();
+	void resizeSlices() throw(char*);
 	/**
 	 * Read all the pixel values into a data structure for input into the neural
 	 * network. Keeping each picture distinct in its own data structure is necessary.
 	 */
-	void readPixels();
+	void readPixels() throw(char*);
 	/**
 	 * Build and initialize the neural network, including training using the
 	 * desired training set.
