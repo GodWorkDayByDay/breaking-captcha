@@ -1,13 +1,5 @@
 #include "GuessCaptcha.h"
-#include <string>
-#include <vector>
-#include <cstdlib>
-#include <cstdio>
-#include <math.h>
-#include <omp.h>
-#include <sstream>
-#include "NeuralNet.h"
-#include "readpng.h"
+#include <png++/png.hpp>
 
 GuessCaptcha::GuessCaptcha() {
 	this->guess = "something";
@@ -15,7 +7,8 @@ GuessCaptcha::GuessCaptcha() {
 }
 
 void GuessCaptcha::buildNN() {
-	this->NN = new NeuralNet(this->NUM_INPUT_NEURONS, this->NUM_HIDDEN_NEURONS, this->NUM_OUTPUT_NEURONS);
+	NeualNet nn(this->NUM_INPUT_NEURONS, this->NUM_HIDDEN_NEURONS, this->NUM_OUTPUT_NEURONS));
+	this->NN = nn;
 	//TODO: training data, no idea
 }
 
@@ -47,10 +40,11 @@ void GuessCaptcha::segmentImage() throw(char*) {
 	// convert -segment 20 -white-threshold 20 -crop 29 -depth 1 c1.gif c1.png
 	// mogrify -resize 50x50 c1-*.png
 	
-	unsigned long width, height;
-	int slices, res;
+	int slices;
 	std::string cmd;
-	FILE* wholeFile = fopen(this->inputFile.c_str(), "rb");
+	png::image<png::gray_pixel_1> image(this->inputFile);
+	int width = (int) image.get_width();
+	int height = (int) image.get_height();
 	
 	cmd = cmd + "convert -segment " + itos(this->segmentValue);
 	cmd = cmd + " -white-threshold " + itos(this->whiteThreshold);
@@ -60,23 +54,11 @@ void GuessCaptcha::segmentImage() throw(char*) {
 		throw "Invalid command.";
 	}
 	
-	res = readpng_init(wholeFile, &width, &height);
-	if (res == 0) {
-		// Get the number of slices we made which is the ceiling
-		// of width/width_of_slices.
-		slices = (int) ceil((float)width/(float)this->slicePixel);
-		for (int i=0; i<slices; ++i) {
-			this->slicedImagesLocations.push_back("/tmp/c1-"+itos(i)+".png");
-		}
-		
-		//cleanup our mess
-		fclose(wholeFile);
-		readpng_cleanup(0);
-	}
-	else {
-		fclose(wholeFile);
-		readpng_cleanup(0);
-		throw("Error reading file.");
+	// Get the number of slices we made which is the ceiling
+	// of width/width_of_slices.
+	slices = (int) ceil((float)width/this->slicePixel);
+	for (int i=0; i<slices; ++i) {
+		this->slicedImagesLocations.push_back("/tmp/c1-"+itos(i)+".png");
 	}
 }
 
@@ -95,47 +77,37 @@ void GuessCaptcha::resizeSlices() throw(char*) {
 
 void GuessCaptcha::readPixels() throw(char*) {
 	unsigned long rowBytes, width, height;
-	int channels;
-	int initRes, num_slices = this->slicedImagesLocations.size();
-	unsigned char* image_data;
-	double* image_info;
-	FILE* sliceFile;
+	int num_slices = this->slicedImagesLocations.size();
+	std::vector<double> tmpImage;
 	
-	// Since I don't feel like rewriting the code from the png book,
-	// I'm just going to typecast the chars to doubles.
+	// dont want any mishaps
+	this->pixelValues.empty();
 	
 	for (int i=0; i<num_slices; ++i) {
 		// open a file pointer for readpng to read
-		sliceFile = fopen(this->slicedImagesLocations.at(i).c_str(), "r");
-		
-		// init and read the png, otherwise throw an error
-		initRes = readpng_init(sliceFile, &width, &height);
-		if ( initRes==0 ) {
-			image_data = readpng_get_image(0, &channels, &rowBytes);
+		png::image<png::gray_pixel_1> image(this->slicedImagesLocations.at(i));
+		width = image.get_width();
+		height = image.get_height();
 			
-			// move the char* data into the double*
-			for (int j=0; j<image_data; ++j) {
-				image_info[j] = (double) image_data[j];
+		// move the image data into the pixel values structure
+		for (int h=0; h<height; ++h) {
+			for (int w=0; w<width; ++w) {
+				tmpImage.push_back(image.get_pixel(w, h));
 			}
-			this->pixelValues.push_back(image_info);
-			
-			// cleanup the mess
-			readpng_cleanup(1);
-			fclose(sliceFile);
 		}
-		else {
-			readpng_cleanup(1);
-			fclose(sliceFile);
-			throw("Error getting image pixels.");
-		}
+		this->pixelValues.push_back(tmpImage);
+		
+		// cleanup the mess
+		readpng_cleanup(1);
+		fclose(sliceFile);
 	}
 }
 
 void GuessCaptcha::computeData() {
 	int numArrays = this->pixelValues.size();
 	for (int i=0; i<numArrays; ++i) {
-		this->NN->inputData = this->pixelValues[i];
-		this->NN->compute();
+		this->NN.inputData = this->pixelValues.at(i);
+		this->NN.compute();
 		this->readOutputs();
 	}
 }
@@ -146,10 +118,10 @@ void GuessCaptcha::readOutputs() {
 	
 	// get the largest index which we will use to map to a character.
 	#pragma omp parallel
-	for (int i=0; i<this->NN->numOutput; ++i) {
-		if (this->NN->output->neurons[i].value > largestValue) {
+	for (int i=0; i<this->NN.numOutput; ++i) {
+		if (this->NN.output.neurons.at(i).value > largestValue) {
 			largestIndex = i;
-			largestValue = this->NN->output->neurons[i].value;
+			largestValue = this->NN.output.neurons.at(i).value;
 			break;
 		}
 	}

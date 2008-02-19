@@ -3,6 +3,12 @@
 
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <cstdio>
+#include <cmath>
+#include <omp.h>
+#include <sstream>
+#include "image.hpp"
 #include "NeuralNet.h"
 
 class GuessCaptcha {
@@ -65,10 +71,10 @@ private:
 	std::string segmentedImageLocation; /**< The file location of the newly segmented image. */
 	std::string guess; /**< Stores the accumulated guesses for each of the data sets that have been passed to computeData. */
 	std::vector<std::string> slicedImagesLocations; /**< The locations of the sliced images. */
-	std::vector<double*> pixelValues; /**< Contains all the pixel values of each of the sliced images. */
+	std::vector<std::vector<double> > pixelValues; /**< Contains all the pixel values of each of the sliced images. */
 	std::string CHARACTER_MAP; /** Contains the mapping used to map the neurons to actual characters. */
 	
-	NeuralNet* NN; /**< The neural network that will be used to guess each letter in the sliced images. */
+	NeuralNet NN; /**< The neural network that will be used to guess each letter in the sliced images. */
 	
 	static const int NUM_INPUT_NEURONS = 1600; /**< Going to be using 40x40 images, so that means lots of input neurons. */
 	static const int NUM_HIDDEN_NEURONS = 500; /**< Set a number of hidden neurons, this must be tweaked. */
