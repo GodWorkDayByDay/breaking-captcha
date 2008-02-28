@@ -1,5 +1,5 @@
 #include "GuessCaptcha.h"
-#include <png++/png.hpp>
+#include "ImageMagick/Magick++.h"
 
 GuessCaptcha::GuessCaptcha() {
 	this->guess = "something";
@@ -7,7 +7,7 @@ GuessCaptcha::GuessCaptcha() {
 }
 
 void GuessCaptcha::buildNN() {
-	NeualNet nn(this->NUM_INPUT_NEURONS, this->NUM_HIDDEN_NEURONS, this->NUM_OUTPUT_NEURONS));
+	NeuralNet nn(this->NUM_INPUT_NEURONS, this->NUM_HIDDEN_NEURONS, this->NUM_OUTPUT_NEURONS);
 	this->NN = nn;
 	//TODO: training data, no idea
 }
@@ -42,17 +42,23 @@ void GuessCaptcha::segmentImage() throw(char*) {
 	
 	int slices;
 	std::string cmd;
-	png::image<png::gray_pixel_1> image(this->inputFile);
-	int width = (int) image.get_width();
-	int height = (int) image.get_height();
+	Magick::Image image(this->inputFile);
+	int width = (int) image.columns();
 	
-	cmd = cmd + "convert -segment " + itos(this->segmentValue);
-	cmd = cmd + " -white-threshold " + itos(this->whiteThreshold);
-	cmd = cmd + " -crop " + itos(this->slicePixel) + " -depth 1 " + this->inputFile + " /tmp/c1.png";
+	// set to grayscale
+	image.type(Magick::BilevelType);
+	image.segment(this->segmentValue);
+	image.threshold(this->whiteThreshold);
+	image.modifyImage();
+	//TODO: fix this so it actually does something useful
 	
-	if (!std::system("rm -fR /tmp/c1-*.png") || !std::system(cmd.c_str())) {
-		throw "Invalid command.";
-	}
+//	cmd = cmd + "convert -segment " + itos(this->segmentValue);
+//	cmd = cmd + " -white-threshold " + itos(this->whiteThreshold);
+//	cmd = cmd + " -crop " + itos(this->slicePixel) + " -depth 1 " + this->inputFile + " /tmp/c1.png";
+//	
+//	if (!std::system("rm -fR /tmp/c1-*.png") || !std::system(cmd.c_str())) {
+//		throw "Invalid command: "+cmd;
+//	}
 	
 	// Get the number of slices we made which is the ceiling
 	// of width/width_of_slices.
@@ -76,7 +82,7 @@ void GuessCaptcha::resizeSlices() throw(char*) {
 }
 
 void GuessCaptcha::readPixels() throw(char*) {
-	unsigned long rowBytes, width, height;
+	int width, height;
 	int num_slices = this->slicedImagesLocations.size();
 	std::vector<double> tmpImage;
 	
@@ -85,21 +91,20 @@ void GuessCaptcha::readPixels() throw(char*) {
 	
 	for (int i=0; i<num_slices; ++i) {
 		// open a file pointer for readpng to read
-		png::image<png::gray_pixel_1> image(this->slicedImagesLocations.at(i));
-		width = image.get_width();
-		height = image.get_height();
+		Magick::Image image(this->slicedImagesLocations.at(i));
+		image.type(Magick::BilevelType);
+		image.modifyImage();
+		width = (int) image.columns();
+		height = (int) image.rows();
 			
 		// move the image data into the pixel values structure
+		#pragma omp parallel
 		for (int h=0; h<height; ++h) {
 			for (int w=0; w<width; ++w) {
-				tmpImage.push_back(image.get_pixel(w, h));
+				tmpImage.push_back((double)(((Magick::ColorMono)image.pixelColor(w, h)).mono()));
 			}
 		}
 		this->pixelValues.push_back(tmpImage);
-		
-		// cleanup the mess
-		readpng_cleanup(1);
-		fclose(sliceFile);
 	}
 }
 

@@ -8,23 +8,23 @@
 
 #include "GenericLayer.h"
 
-GenericLayer::GenericLayer(int numNeurons, const GenericLayer& parent, const GenericLayer& child) throw(int) {
+GenericLayer::GenericLayer(int numNeurons, GenericLayer& parent, GenericLayer& child) throw(int) {
 	if ( numNeurons >= this->MIN_NEURONS && numNeurons <= this->MAX_NEURONS ) {
 		this->numNeurons = numNeurons;
 	}
 	else {
 		throw numNeurons;
 	}
-	this->parentLayer = parent;
-	this->childLayer = child;
+	this->parentLayer = &parent;
+	this->childLayer = &child;
 	this->hasParent = true;
 	this->hasChild = true;
 }
 
-GenericLayer::GenericLayer(const GenericLayer& parent, const GenericLayer& child) {
+GenericLayer::GenericLayer(GenericLayer& parent, GenericLayer& child) {
 	this->numNeurons = 0;
-	this->parentLayer = parent;
-	this->childLayer = child;
+	this->parentLayer = &parent;
+	this->childLayer = &child;
 	this->hasParent = true;
 	this->hasChild = true;
 }
@@ -56,7 +56,7 @@ void GenericLayer::initWeights() {
 	if ( this->hasChild && this->numNeurons != 0 ) {
 		#pragma omp parallel
 		for (int i=0; i<this->numNeurons; ++i) {
-			for (int j=0; j<this->childLayer.numNeurons; ++i) {
+			for (int j=0; j<this->childLayer->numNeurons; ++i) {
 				this->weights.at(i).at(j) = 0.0;
 			}
 		}
@@ -64,8 +64,9 @@ void GenericLayer::initWeights() {
 }
 
 void GenericLayer::initNeurons() {
+	this->neurons.resize(numNeurons);
 	#pragma omp parallel
 	for (int i=0; i<this->numNeurons; ++i) {
-		this->neurons.push_back(0.0);
+		this->neurons.at(i).value = 0.0;
 	}
 }

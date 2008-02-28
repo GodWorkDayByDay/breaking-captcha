@@ -42,7 +42,7 @@ public:
 	 * @throw integer Throws an integer exception when the bounds of the GenericLayer::MAX_NEURONS or GenericLayer::MIN_NEURONS number of neurons in this layer has been broken. 
 	 * @post All the default values have been assigned and all vectors have been filled. Ready to train.
 	**/ 
-	GenericLayer(int numNeurons, const GenericLayer& parent, const GenericLayer& child) throw(int);
+	GenericLayer(int numNeurons, GenericLayer& parent, GenericLayer& child) throw(int);
 	
 	/**
 	 * Create a neural layer with parent and child.
@@ -51,7 +51,7 @@ public:
 	 * @poast Parent and child layers have been assigned, but still need to
 	 * assign the number of neurons in this layer.
 	**/
-	GenericLayer(const GenericLayer& parent, const GenericLayer& child);
+	GenericLayer(GenericLayer& parent, GenericLayer& child);
 	
 	/**
 	 * Create a neual layer with numNeruons.
@@ -71,13 +71,13 @@ public:
 	 * Set the parent layer of this layer.
 	 * @param parent The parent layer to assign to this layer.
 	**/
-	void setParent(const GenericLayer& parent);
+	void setParent(GenericLayer& parent);
 	
 	/**
 	 * Set the child layer of this layer.
 	 * @param child The child layer to assign to this layer.
 	**/
-	void setChild(const GenericLayer& parent);
+	void setChild(GenericLayer& parent);
 	
 	/**
 	 * Set the number of neurons to create for this layer.
@@ -115,8 +115,8 @@ public:
 	**/
 	void init();
 	
-	GenericLayer parentLayer; /**< Pointer to the parent layer of this layer. **/
-	GenericLayer childLayer; /**< Pointer to the child layer of this layer. **/
+	GenericLayer* parentLayer; /**< Pointer to the parent layer of this layer. **/
+	GenericLayer* childLayer; /**< Pointer to the child layer of this layer. **/
 	
 	bool hasParent; /**< Does this layer have a parent layer? **/
 	bool hasChild; /**< Does this layer have a child layer? **/

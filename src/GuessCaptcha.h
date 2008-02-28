@@ -8,7 +8,7 @@
 #include <cmath>
 #include <omp.h>
 #include <sstream>
-#include "image.hpp"
+#include "ImageMagick/Magick++.h"
 #include "NeuralNet.h"
 
 class GuessCaptcha {

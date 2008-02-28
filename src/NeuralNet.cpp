@@ -19,10 +19,10 @@ NeuralNet::NeuralNet(int numInput, int numHidden, int numOutput) {
 	this->numOutput = numOutput;
 	
 	// instanciate the layers
-	this->input = new GenericLayer(this->numInput);
+	this->input.setNumNeurons(this->numInput);
 	this->input.setChild(this->hidden);
-	this->hidden = new GenericLayer(this->numHidden, this->input, this->output);
-	this->output = new GenericLayer(this->numOutput);
+	this->hidden = GenericLayer(this->numHidden, this->input, this->output);
+	this->output.setNumNeurons(this->numOutput);
 	this->output.setParent(this->hidden);
 	
 	// init the layers
@@ -94,8 +94,8 @@ void NeuralNet::calculateNeuronValues(GenericLayer& layer) {
 	#pragma omp parallel
 	for (int i=0; i<layer.numNeurons; ++i) {
 		#pragma omp parallel
-		for (int j=0; j<layer.parentLayer.numNeurons; ++j) {
-			tmp += layer.parentLayer.neurons.at(j).value * layer.parentLayer.weights.at(j).at(i);
+		for (int j=0; j<layer.parentLayer->numNeurons; ++j) {
+			tmp += layer.parentLayer->neurons.at(j).value * layer.parentLayer->weights.at(j).at(i);
 		}
 		// addition of the bias term, wich is essentially the j+1 weight on i
 		tmp += layer.neurons.at(i).bias * layer.neurons.at(i).biasWeight;
@@ -132,10 +132,10 @@ void NeuralNet::alterWeights(GenericLayer& layer) {
 		}
 		// we uncouple this loop from the previous to access the weight array in row-major order
 		#pragma omp parallel
-		for (int j=0; j<layer.parentLayer.numNeurons; ++j) {
-			#pragma omp parrallel
+		for (int j=0; j<layer.parentLayer->numNeurons; ++j) {
+			#pragma omp parallel
 			for (int i=0; i<layer.numNeurons; ++i) {
-				layer.parentLayer.weights.at(j).at(i) += this->learningRate * layer.neurons.at(j).localGradient * layer.parentLayer.neurons.at(j).value;
+				layer.parentLayer->weights.at(j).at(i) += this->learningRate * layer.neurons.at(j).localGradient * layer.parentLayer->neurons.at(j).value;
 			}
 		}
 	}
@@ -150,16 +150,16 @@ void NeuralNet::alterWeights(GenericLayer& layer) {
 			sumGradientWeights = 0;
 			// summing up the gradients of the child layer and the weights connecting them
 			#pragma omp parallel
-			for (int k=0; k<layer.childLayer.numNeurons; ++k) {
-				sumGradientWeights += layer.childLayer.neurons[k].localGradient * layer.weights.at(j)[k];
+			for (int k=0; k<layer.childLayer->numNeurons; ++k) {
+				sumGradientWeights += layer.childLayer->neurons[k].localGradient * layer.weights.at(j)[k];
 			}
 			// now that we have the sum of those gradients we can calculate this neuron's gradient
 			layer.neurons.at(j).localGradient = layer.neurons.at(j).value * (1-layer.neurons.at(j).value) * sumGradientWeights;
 			
 			// now that we have the local gradient we can change the weights between this neuron and those neurons connected to it in the parent layer
 			#pragma omp parallel
-			for (int i=0; i<layer.parentLayer.numNeurons; ++i) {
-				layer.parentLayer.weights.at(i).at(j) += this->learningRate * layer.neurons.at(j).localGradient * layer.parentLayer.neurons.at(i).value;
+			for (int i=0; i<layer.parentLayer->numNeurons; ++i) {
+				layer.parentLayer->weights.at(i).at(j) += this->learningRate * layer.neurons.at(j).localGradient * layer.parentLayer->neurons.at(i).value;
 			}
 		}
 	}
