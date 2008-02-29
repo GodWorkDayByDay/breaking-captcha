@@ -77,7 +77,7 @@ public:
 	 * Set the child layer of this layer.
 	 * @param child The child layer to assign to this layer.
 	**/
-	void setChild(GenericLayer& parent);
+	void setChild(GenericLayer& child);
 	
 	/**
 	 * Set the number of neurons to create for this layer.

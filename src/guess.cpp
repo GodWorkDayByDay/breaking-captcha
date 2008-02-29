@@ -13,9 +13,9 @@ int main(int argc, char** argv) {
 		// Define and parse the command line arguments.
 		CmdLine cmd("Captcha reading utility.", ' ', "0.1");
 		ValueArg<string> inputFileArg("f", "file", "The file containing the captcha image the script will attempt to read and guess what it says.", true, "", "string path/filename", cmd);
-		ValueArg<int> segmentValueArg("s", "segmentValue", "Value used to segment the image.", false, 20, "int", cmd);
-		ValueArg<int> whiteThresholdArg("w", "whiteThreshold", "Value used to white threshold the image.", false, 100 ,"int", cmd);
-		ValueArg<int> slicePixelArg("p", "slice", "The pixel on which this image will be sliced.", false, 20, "int", cmd);
+		ValueArg<int> segmentValueArg("s", "segmentValue", "Value used to segment the image.", false, 1, "int", cmd);
+		ValueArg<int> whiteThresholdArg("w", "whiteThreshold", "Value used to white threshold the image.", false, 20 ,"int", cmd);
+		ValueArg<int> slicePixelArg("p", "slice", "The pixel on which this image will be sliced.", false, 35, "int", cmd);
 		cmd.parse(argc, argv);
 		
 		// Set the instance variables to the command line arguments.

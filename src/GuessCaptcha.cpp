@@ -1,5 +1,6 @@
 #include "GuessCaptcha.h"
-#include "ImageMagick/Magick++.h"
+#include <cstdlib>
+#include <iostream>
 
 GuessCaptcha::GuessCaptcha() {
 	this->guess = "something";
@@ -21,64 +22,83 @@ void GuessCaptcha::start() {
 	try {
 		this->segmentImage();
 		this->resizeSlices();
-		this->readPixels();
-		this->buildNN();
-		this->computeData();
+//		this->readPixels();
+//		this->buildNN();
+//		this->computeData();
 	} catch (char* e) {
 		std::printf("Exception raised: %s\n", e);
 	}
 }
 
-std::string itos(int i) {
-	std::stringstream s;
-	s << i;
-	return s.str();
+std::string generateRandomString(int len) {
+	const char *chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+	int max = strlen(chars);
+	std::string res("", len);
+	
+	#pragma omp parallel
+	for (int i=0; i<len; ++i ) {
+		res[i] = chars[rand() % max];
+	}
+	
+	return res;
 }
 
 void GuessCaptcha::segmentImage() throw(char*) {
-	// magic command to segment, slice and resize
-	// convert -segment 20 -white-threshold 20 -crop 29 -depth 1 c1.gif c1.png
-	// mogrify -resize 50x50 c1-*.png
-	
-	int slices;
-	std::string cmd;
+	int slices, cropXStart, cropXEnd;
+	std::string randomName;
+	Magick::Geometry sliceGeo(40, 40);
 	Magick::Image image(this->inputFile);
 	int width = (int) image.columns();
 	
-	// set to grayscale
-	image.type(Magick::BilevelType);
+	// segment and threshold out the noise
 	image.segment(this->segmentValue);
 	image.threshold(this->whiteThreshold);
+	// set to gray after we segment and treshold the image
+	// otherwise bad things happen, like big grey blobs,
+	// and noone likes a big grey blob, unless you are a
+	// big grey blob, but even then you might be
+	// a little self conscious
+	image.type(Magick::BilevelType);
 	image.modifyImage();
-	//TODO: fix this so it actually does something useful
 	
-//	cmd = cmd + "convert -segment " + itos(this->segmentValue);
-//	cmd = cmd + " -white-threshold " + itos(this->whiteThreshold);
-//	cmd = cmd + " -crop " + itos(this->slicePixel) + " -depth 1 " + this->inputFile + " /tmp/c1.png";
-//	
-//	if (!std::system("rm -fR /tmp/c1-*.png") || !std::system(cmd.c_str())) {
-//		throw "Invalid command: "+cmd;
-//	}
-	
-	// Get the number of slices we made which is the ceiling
+	// now to crop into slices
+	// Get the number of slices to make which is the ceiling
 	// of width/width_of_slices.
-	slices = (int) ceil((float)width/this->slicePixel);
+	slices = (int) ceil((double)width/this->slicePixel);
 	for (int i=0; i<slices; ++i) {
-		this->slicedImagesLocations.push_back("/tmp/c1-"+itos(i)+".png");
+		Magick::Image imgCopy(image);
+		// pictorially this looks like:
+		// [----]------------------------
+		//  ----[----]--------------------
+		//  ---------[----]---------------
+		//  ...
+		//  -------------------------[---]
+		// if the slicePixel were 4.
+		cropXStart = this->slicePixel * i;
+		cropXEnd = this->slicePixel + cropXStart;
+		if (cropXEnd > width) cropXEnd = width-1;
+		std::cout << "cropping from " << cropXStart << " to " << cropXEnd << "\n";
+		std::flush(std::cout);
+		image.modifyImage();
+		imgCopy.chop(Magick::Geometry(cropXStart, 0));
+		imgCopy.crop(Magick::Geometry(imgCopy.rows(), cropXEnd));
+		
+		// might as well resize it too, and deprecate resizeSlices()
+		imgCopy.scale(sliceGeo);
+		
+		// write it out to a randomly generated name
+		// and keep track of it in our member variable
+		// saving it as a pbm, an X representation of black
+		// and white images
+		randomName = "/tmp/captchas/" + generateRandomString(10) + ".pbm";
+		this->slicedImagesLocations.push_back(randomName);
+		imgCopy.write(randomName);
 	}
 }
 
 void GuessCaptcha::resizeSlices() throw(char*) {
-	std::string cmd;
-	int size = this->slicedImagesLocations.size();
-	
-	for (int i=0; i<size; ++i) {
-		cmd = "mogrify -resize 40x40 " + this->slicedImagesLocations.at(i);
-		
-		if (!std::system(cmd.c_str())) {
-			throw "Invalid command.";
-		}
-	}
+	// deprecated, boo go away
+	return;
 }
 
 void GuessCaptcha::readPixels() throw(char*) {
@@ -89,16 +109,14 @@ void GuessCaptcha::readPixels() throw(char*) {
 	// dont want any mishaps
 	this->pixelValues.empty();
 	
+	#pragma omp parallel for
 	for (int i=0; i<num_slices; ++i) {
-		// open a file pointer for readpng to read
 		Magick::Image image(this->slicedImagesLocations.at(i));
 		image.type(Magick::BilevelType);
-		image.modifyImage();
 		width = (int) image.columns();
 		height = (int) image.rows();
 			
 		// move the image data into the pixel values structure
-		#pragma omp parallel
 		for (int h=0; h<height; ++h) {
 			for (int w=0; w<width; ++w) {
 				tmpImage.push_back((double)(((Magick::ColorMono)image.pixelColor(w, h)).mono()));
@@ -122,12 +140,12 @@ void GuessCaptcha::readOutputs() {
 	double largestValue = 0;
 	
 	// get the largest index which we will use to map to a character.
-	#pragma omp parallel
+	#pragma omp parallel for
 	for (int i=0; i<this->NN.numOutput; ++i) {
 		if (this->NN.output.neurons.at(i).value > largestValue) {
 			largestIndex = i;
 			largestValue = this->NN.output.neurons.at(i).value;
-			break;
+			i = this->NN.numOutput;
 		}
 	}
 	

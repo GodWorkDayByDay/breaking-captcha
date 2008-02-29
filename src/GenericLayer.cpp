@@ -41,6 +41,18 @@ GenericLayer::GenericLayer(int numNeurons) {
 	this->hasChild = false;
 }
 
+void GenericLayer::setParent(GenericLayer& parent) {
+	this->parentLayer = &parent;
+}
+
+void GenericLayer::setChild(GenericLayer& child) {
+	this->childLayer = &child;
+}
+
+void GenericLayer::setNumNeurons(int numNeurons) {
+	this->numNeurons = numNeurons;
+}
+
 GenericLayer::GenericLayer() {
 	this->numNeurons = 0;
 	this->hasParent = false;
