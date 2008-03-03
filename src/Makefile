@@ -1054,7 +1054,7 @@ CC              = g++
 
 CDEBUGFLAGS     =
 
-CCOPTIONS       = -g -O2 -fopenmp `Magick++-config --cppflags --cxxflags --ldflags --libs`
+CCOPTIONS       = -g -O2 -fopenmp `Magick++-config --cppflags --cxxflags --ldflags --libs` -lboost_filesystem-gcc42
 
 # ###############################################################
 
@@ -1062,7 +1062,7 @@ LIBS    =
 
 # ################################################################
 
-SRCS    := Neuron.cpp GenericLayer.cpp NeuralNet.cpp GuessCaptcha.cpp guess.cpp
+SRCS    := Neuron.cpp GenericLayer.cpp NeuralNet.cpp Random.cpp NNTrainer.cpp GuessCaptcha.cpp guess.cpp
 OBJS    := $(SRCS:.cpp=.o)
 
 print:

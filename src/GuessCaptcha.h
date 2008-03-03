@@ -9,6 +9,7 @@
 #include <omp.h>
 #include <sstream>
 #include "ImageMagick/Magick++.h"
+#include "NNTrainer.h"
 #include "NeuralNet.h"
 
 class GuessCaptcha {
@@ -59,6 +60,12 @@ public:
 	 * @return The accumulated guesses for each of the data sets that have been passed to computeData.
 	 */
 	std::string getGuess();
+	/**
+	 * Train the NN so that we can actually use it.
+	 * @pre The neural network has been initialized.
+	 * @post The neural netowrk has been trained and is ready to compute.
+	**/
+	void train();
 	
 	// collection of instance variables specified by the user
 	int segmentValue; /**< The value passed to convert specified by -convert segmentValue. */
@@ -66,6 +73,7 @@ public:
 	int numSlices; /**< The number of slices created. */
 	int slicePixel; /**< The pixel interval on which the image will be sliced. */
 	std::string inputFile; /**< The original file location passed in from the command line. The only required parameter. */
+	std::string trainingSource; /**< The directory where the trainging images are stored */
 
 private:
 	std::string segmentedImageLocation; /**< The file location of the newly segmented image. */

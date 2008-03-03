@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
 		// Define and parse the command line arguments.
 		CmdLine cmd("Captcha reading utility.", ' ', "0.1");
 		ValueArg<string> inputFileArg("f", "file", "The file containing the captcha image the script will attempt to read and guess what it says.", true, "", "string path/filename", cmd);
+		ValueArg<string> trainingSource("t", "trainingSource", "The directory containing all the images to train the NN against. Should contain a directory of images whose name matches the character it depicts, ie 'F.gif'.", true, "", "string path", cmd);
 		ValueArg<int> segmentValueArg("s", "segmentValue", "Value used to segment the image.", false, 1, "int", cmd);
 		ValueArg<int> whiteThresholdArg("w", "whiteThreshold", "Value used to white threshold the image.", false, 20 ,"int", cmd);
 		ValueArg<int> slicePixelArg("p", "slice", "The pixel on which this image will be sliced.", false, 35, "int", cmd);
@@ -20,6 +21,7 @@ int main(int argc, char** argv) {
 		
 		// Set the instance variables to the command line arguments.
 		gc.inputFile = inputFileArg.getValue();
+		gc.trainingSource = trainingSource.getValue();
 		gc.segmentValue = segmentValueArg.getValue();
 		gc.whiteThreshold = whiteThresholdArg.getValue();
 		gc.slicePixel = slicePixelArg.getValue();

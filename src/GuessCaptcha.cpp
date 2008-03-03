@@ -1,6 +1,5 @@
 #include "GuessCaptcha.h"
-#include <cstdlib>
-#include <iostream>
+#include "Random.h"
 
 GuessCaptcha::GuessCaptcha() {
 	this->guess = "something";
@@ -24,6 +23,7 @@ void GuessCaptcha::start() {
 		this->resizeSlices();
 //		this->readPixels();
 //		this->buildNN();
+//		this->train();
 //		this->computeData();
 	} catch (char* e) {
 		std::printf("Exception raised: %s\n", e);
@@ -31,13 +31,14 @@ void GuessCaptcha::start() {
 }
 
 std::string generateRandomString(int len) {
-	const char *chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
-	int max = strlen(chars);
+	std::string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+	int max = chars.size();
+	Random r;
 	std::string res("", len);
 	
-	#pragma omp parallel
+	#pragma omp parallel for
 	for (int i=0; i<len; ++i ) {
-		res[i] = chars[rand() % max];
+		res[i] = chars[r.strong_range(max)];
 	}
 	
 	return res;
@@ -151,4 +152,9 @@ void GuessCaptcha::readOutputs() {
 	
 	// map the index with the largest value to a character.
 	this->guess.append((const char*) this->CHARACTER_MAP[largestIndex]);
+}
+
+void GuessCaptcha::train() {
+	NNTrainer trainer(this->NN, this->trainingSource);
+	trainer.train();
 }
