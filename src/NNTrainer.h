@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <omp.h>
+#include "ImageMagick/Magick++.h"
 #include "boost/filesystem.hpp"
 #include "NeuralNet.h"
 
@@ -27,7 +28,7 @@ public:
 	 * Constructs a new trainer using nnet and location.
 	**/
 	NNTrainer(NeuralNet& nnet, std::string& loc):
-		nn(nnet), imgPath(fs::system_complete(fs::path(loc, fs::native))), imgToChars() {}
+		nn(nnet), imgPath(fs::path(loc)), imgToChars() {}
 	
 	/**
 	 * Constructs the default trainer, must later set nn and imgLocation.
@@ -43,16 +44,22 @@ public:
 	void setNN(NeuralNet& nnet) { this->nn = nnet; }
 	
 	/** 
-	 * Setter method to set the location of the training images. Causes a call
-	 * to readFiles to update imgToChars.
+	 * Setter method to set the location of the training images.
 	**/
 	void setLocation(std::string& loc);
 	
-private:
+//private:
 	/**
 	 * Creates a vector of pairs of image locations to the characters they depict.
 	**/
 	void readFiles();
+	
+	/**
+	 * Read the pixels from imgFileName and store them in imgPixels.
+	 * @param imgFileName The string that represents an image file on a storage medium.
+	 * @param imgPixels The vector to contain the pixel values of the image represented by imgFileName.
+	**/
+	void readPixels(char_t imgFileName, std::vector<double>& imgPixels);
 	
 	/**
 	 * Populates a vector with the filenames found in imgLocation. Only stores
