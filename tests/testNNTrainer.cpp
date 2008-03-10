@@ -11,10 +11,12 @@ int test_main( int, char *[] ) {
 	path_t homeDir("/home/");
 	
 	// testing non-default constructor
-	NeuralNet n;
-	trainer = NNTrainer(n, designDirString);
-	BOOST_CHECK( n.numInput == n.numHidden == n.numOutput ==
-				 trainer.nn.numInput == trainer.nn.numHidden == trainer.nn.numOutput );
+	{
+		NeuralNet n;
+		string tmpDirString = "../design";
+		trainer = NNTrainer(n, tmpDirString);
+	}
+	BOOST_CHECK( 0 == trainer.nn.numInput == trainer.nn.numHidden == trainer.nn.numOutput );
 	BOOST_CHECK( designDir == trainer.imgPath );
 	
 	// testing getFileNames().

@@ -8,7 +8,7 @@
 #include <cmath>
 #include <omp.h>
 #include <sstream>
-#include "ImageMagick/Magick++.h"
+#include "Magick++.h"
 #include "NNTrainer.h"
 #include "NeuralNet.h"
 

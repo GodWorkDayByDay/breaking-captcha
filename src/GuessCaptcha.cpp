@@ -2,14 +2,13 @@
 #include "Random.h"
 
 GuessCaptcha::GuessCaptcha() {
-	this->guess = "something";
+	this->guess.clear();
 	this->CHARACTER_MAP = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 }
 
 void GuessCaptcha::buildNN() {
 	NeuralNet nn(this->NUM_INPUT_NEURONS, this->NUM_HIDDEN_NEURONS, this->NUM_OUTPUT_NEURONS);
 	this->NN = nn;
-	//TODO: training data, no idea
 }
 
 std::string GuessCaptcha::getGuess() {
@@ -19,14 +18,17 @@ std::string GuessCaptcha::getGuess() {
 void GuessCaptcha::start() {
 	// lots-o-functions
 	try {
+		this->buildNN();
+		this->train();
 		this->segmentImage();
 		this->resizeSlices();
-//		this->readPixels();
-//		this->buildNN();
-//		this->train();
-//		this->computeData();
+		this->readPixels();
+		this->computeData();
+		this->readOutputs();
 	} catch (char* e) {
 		std::printf("Exception raised: %s\n", e);
+	} catch (std::exception e) {
+		std::printf("Exception raised: %s\n", e.what());
 	}
 }
 
@@ -38,7 +40,7 @@ std::string generateRandomString(int len) {
 	
 	#pragma omp parallel for
 	for (int i=0; i<len; ++i ) {
-		res[i] = chars[r.strong_range(max)];
+		res.at(i) = chars.at(r.strong_range(max));
 	}
 	
 	return res;
@@ -48,12 +50,19 @@ void GuessCaptcha::segmentImage() throw(char*) {
 	int slices, cropXStart, cropXEnd;
 	std::string randomName;
 	Magick::Geometry sliceGeo(40, 40);
-	Magick::Image image(this->inputFile);
+	Magick::Image image;
+	try {
+		image.read(this->inputFile);
+	}
+	catch (...) {
+		std::cerr << "Couldnt read " << this->inputFile << "." << std::endl;
+		return;
+	}
 	int width = (int) image.columns();
 	
 	// segment and threshold out the noise
-	image.segment(this->segmentValue);
-	image.threshold(this->whiteThreshold);
+//	image.segment(this->segmentValue);
+//	image.threshold(this->whiteThreshold);
 	// set to gray after we segment and treshold the image
 	// otherwise bad things happen, like big grey blobs,
 	// and noone likes a big grey blob, unless you are a
@@ -65,36 +74,36 @@ void GuessCaptcha::segmentImage() throw(char*) {
 	// now to crop into slices
 	// Get the number of slices to make which is the ceiling
 	// of width/width_of_slices.
-	slices = (int) ceil((double)width/this->slicePixel);
-	for (int i=0; i<slices; ++i) {
+//	slices = (int) ceil((double)width/this->slicePixel);
+//	for (int i=0; i<slices; ++i) {
 		Magick::Image imgCopy(image);
-		// pictorially this looks like:
-		// [----]------------------------
-		//  ----[----]--------------------
-		//  ---------[----]---------------
-		//  ...
-		//  -------------------------[---]
-		// if the slicePixel were 4.
-		cropXStart = this->slicePixel * i;
-		cropXEnd = this->slicePixel + cropXStart;
-		if (cropXEnd > width) cropXEnd = width-1;
-		std::cout << "cropping from " << cropXStart << " to " << cropXEnd << "\n";
-		std::flush(std::cout);
-		image.modifyImage();
-		imgCopy.chop(Magick::Geometry(cropXStart, 0));
-		imgCopy.crop(Magick::Geometry(imgCopy.rows(), cropXEnd));
-		
-		// might as well resize it too, and deprecate resizeSlices()
+//		// pictorially this looks like:
+//		// [----]------------------------
+//		//  ----[----]--------------------
+//		//  ---------[----]---------------
+//		//  ...
+//		//  -------------------------[---]
+//		// if the slicePixel were 4.
+//		cropXStart = this->slicePixel * i;
+//		cropXEnd = this->slicePixel + cropXStart;
+//		if (cropXEnd > width) cropXEnd = width-1;
+//		std::cout << "cropping from " << cropXStart << " to " << cropXEnd << endl;
+//		imgCopy.modifyImage();
+//		imgCopy.chop(Magick::Geometry(cropXStart, 0));
+//		imgCopy.crop(Magick::Geometry(imgCopy.rows(), cropXEnd));
+//		
+//		// might as well resize it too, and deprecate resizeSlices()
 		imgCopy.scale(sliceGeo);
-		
-		// write it out to a randomly generated name
-		// and keep track of it in our member variable
-		// saving it as a pbm, an X representation of black
-		// and white images
-		randomName = "/tmp/captchas/" + generateRandomString(10) + ".pbm";
+//		
+//		// write it out to a randomly generated name
+//		// and keep track of it in our member variable
+//		// saving it as a pbm, an X representation of black
+//		// and white images
+		randomName = "/tmp/" + generateRandomString(10) + ".pbm";
 		this->slicedImagesLocations.push_back(randomName);
 		imgCopy.write(randomName);
-	}
+//		imgCopy.display();
+//	}
 }
 
 void GuessCaptcha::resizeSlices() throw(char*) {
@@ -116,6 +125,7 @@ void GuessCaptcha::readPixels() throw(char*) {
 		image.type(Magick::BilevelType);
 		width = (int) image.columns();
 		height = (int) image.rows();
+		tmpImage.resize(width*height, 0);
 			
 		// move the image data into the pixel values structure
 		for (int h=0; h<height; ++h) {
@@ -132,13 +142,14 @@ void GuessCaptcha::computeData() {
 	for (int i=0; i<numArrays; ++i) {
 		this->NN.inputData = this->pixelValues.at(i);
 		this->NN.compute();
-		this->readOutputs();
 	}
 }
 
 void GuessCaptcha::readOutputs() {
 	int largestIndex = 0;
 	double largestValue = 0;
+	std::string tmpGuess;
+	this->guess.clear();
 	
 	// get the largest index which we will use to map to a character.
 	#pragma omp parallel for
@@ -146,12 +157,13 @@ void GuessCaptcha::readOutputs() {
 		if (this->NN.output.neurons.at(i).value > largestValue) {
 			largestIndex = i;
 			largestValue = this->NN.output.neurons.at(i).value;
-			i = this->NN.numOutput;
 		}
 	}
 	
 	// map the index with the largest value to a character.
-	this->guess.append((const char*) this->CHARACTER_MAP[largestIndex]);
+	if (largestIndex >= this->CHARACTER_MAP.size() ) throw("Got an invalid index from readOutputs().");
+	tmpGuess = this->CHARACTER_MAP.at(largestIndex);
+	this->guess.append(tmpGuess);
 }
 
 void GuessCaptcha::train() {

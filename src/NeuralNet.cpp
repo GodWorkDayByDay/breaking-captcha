@@ -151,7 +151,7 @@ void NeuralNet::alterWeights(GenericLayer& layer) {
 			// summing up the gradients of the child layer and the weights connecting them
 			#pragma omp parallel
 			for (int k=0; k<layer.childLayer->numNeurons; ++k) {
-				sumGradientWeights += layer.childLayer->neurons[k].localGradient * layer.weights.at(j)[k];
+				sumGradientWeights += layer.childLayer->neurons.at(k).localGradient * layer.weights.at(j).at(k);
 			}
 			// now that we have the sum of those gradients we can calculate this neuron's gradient
 			layer.neurons.at(j).localGradient = layer.neurons.at(j).value * (1-layer.neurons.at(j).value) * sumGradientWeights;

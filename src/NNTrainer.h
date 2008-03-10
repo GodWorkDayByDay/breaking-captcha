@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 #include <omp.h>
-#include "ImageMagick/Magick++.h"
+#include "Magick++.h"
 #include "boost/filesystem.hpp"
 #include "NeuralNet.h"
 
