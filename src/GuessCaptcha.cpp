@@ -38,7 +38,6 @@ std::string generateRandomString(int len) {
 	Random r;
 	std::string res("", len);
 	
-	#pragma omp parallel for
 	for (int i=0; i<len; ++i ) {
 		res.at(i) = chars.at(r.strong_range(max));
 	}
@@ -119,7 +118,7 @@ void GuessCaptcha::readPixels() throw(char*) {
 	// dont want any mishaps
 	this->pixelValues.empty();
 	
-	#pragma omp parallel for
+//	#pragma omp parallel for
 	for (int i=0; i<num_slices; ++i) {
 		Magick::Image image(this->slicedImagesLocations.at(i));
 		image.type(Magick::BilevelType);
@@ -152,7 +151,7 @@ void GuessCaptcha::readOutputs() {
 	this->guess.clear();
 	
 	// get the largest index which we will use to map to a character.
-	#pragma omp parallel for
+//	#pragma omp parallel for
 	for (int i=0; i<this->NN.numOutput; ++i) {
 		if (this->NN.output.neurons.at(i).value > largestValue) {
 			largestIndex = i;
