@@ -66,8 +66,8 @@ double NeuralNet::calculateMSE() {
 	double sum=0;
 	
 //	#pragma omp parallel for reduction(+:sum)
-	for (int i=0; i<this->input.numNeurons; ++i) {
-		sum += pow(this->input.neurons.at(i).error, 2);
+	for (int i=0; i<this->output.numNeurons; ++i) {
+		sum += pow(this->output.neurons.at(i).error, 2);
 	}
 	return sum;
 }
@@ -83,7 +83,7 @@ std::vector<Neuron> NeuralNet::getOutput() {
 }
 
 void NeuralNet::calculateNeuronValues(GenericLayer& layer) {
-	double tmp=0;
+	double tmp(0);
 	int j(0);
 	
 	// simply put the inputData into the input layer
@@ -97,23 +97,25 @@ void NeuralNet::calculateNeuronValues(GenericLayer& layer) {
 	
 //	#pragma omp parallel for private(j) if(layer.numNeurons > 500)
 	for (int i=0; i<layer.numNeurons; ++i) {
+		tmp = 0;
 		for (j=0; j<layer.parentLayer->numNeurons; ++j) {
 			tmp += layer.parentLayer->neurons.at(j).value * layer.parentLayer->weights.at(j).at(i);
 		}
 		// addition of the bias term, wich is essentially the j+1 weight on i
-		tmp += layer.neurons.at(i).bias * layer.neurons.at(i).biasWeight;
+//		tmp += layer.neurons.at(i).bias * layer.neurons.at(i).biasWeight;
 		
 		// if this is the output layer then we just pass the value through a linear activation
 		// function, ie y(i) = x.
-		if ( !layer.hasChild ) {
-			layer.neurons.at(i).value = tmp;
+		if ( layer.hasChild ) {
+			tmp = this->logisticActivation(tmp);
 		}
-		// otherwise we put it through the activation function of our choosing, in this case a
-		// logistic one that is easily differentiated
+		
+		if ( tmp > 0.5 ) {
+			layer.neurons.at(i).value = 1;
+		}
 		else {
-			layer.neurons.at(i).value = this->logisticActivation(tmp);
+			layer.neurons.at(i).value = 0;
 		}
-		tmp = 0;
 	}
 }
 

@@ -1,2 +1,2 @@
-g++ -o testNNTrainer testNNTrainer.cpp -g -O2 -fopenmp `Magick++-config --cppflags --cxxflags --ldflags --libs` -lboost_filesystem-gcc42      ../src/Neuron.o ../src/GenericLayer.o ../src/NeuralNet.o ../src/Random.o ../src/NNTrainer.o ../src/GuessCaptcha.o
+#g++ -o testNNTrainer testNNTrainer.cpp -g -O2 -fopenmp `Magick++-config --cppflags --cxxflags --ldflags --libs` -lboost_filesystem-gcc42      ../src/Neuron.o ../src/GenericLayer.o ../src/NeuralNet.o ../src/Random.o ../src/NNTrainer.o ../src/GuessCaptcha.o
 g++ -o testNeuralNet testNeuralNet.cpp -g -O2 -fopenmp `Magick++-config --cppflags --cxxflags --ldflags --libs` -lboost_filesystem-gcc42      ../src/Neuron.o ../src/GenericLayer.o ../src/NeuralNet.o ../src/Random.o ../src/NNTrainer.o ../src/GuessCaptcha.o

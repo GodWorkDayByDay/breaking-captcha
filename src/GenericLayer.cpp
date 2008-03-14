@@ -79,7 +79,7 @@ void GenericLayer::initWeights() {
 			this->weights.at(i).resize(this->childLayer->numNeurons);
 			
 			for (j=0; j<this->childLayer->numNeurons; ++j) {
-				this->weights.at(i).at(j) = 0.0;
+				this->weights.at(i).at(j) = 1.0;
 			}
 		}
 	}
@@ -92,5 +92,6 @@ void GenericLayer::initNeurons() {
 //	#pragma omp parallel for if(this->numNeurons > 500)
 	for (int i=0; i<this->numNeurons; ++i) {
 		this->neurons.at(i).value = 0.0;
+		this->neurons.at(i).bias = 1;
 	}
 }
