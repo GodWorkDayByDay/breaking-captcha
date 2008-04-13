@@ -10,6 +10,7 @@
 #include <omp.h>
 #include <cstdlib>
 #include <math.h>
+#include "Random.h"
 #include "Neuron.h"
 
 #ifndef GENERICLAYER_H_

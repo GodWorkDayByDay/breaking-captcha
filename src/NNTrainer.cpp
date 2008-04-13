@@ -4,24 +4,39 @@ void NNTrainer::train() {
 	std::vector<double> tmpPixelValues;
 	std::string outputCharacters = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	this->readFiles();
+	int iterations(0);
+	double currentMSE(0), lastMSE(0);
 	
-	for (img_char_map_t::iterator imgCharItr = this->imgToChars.begin(); imgCharItr != this->imgToChars.end(); ++imgCharItr) {
-		this->nn.inputData.clear();
-		this->readPixels(imgCharItr->first, tmpPixelValues);
-		this->nn.inputData = tmpPixelValues;
-		
-		this->nn.desiredOutput.assign(this->nn.numOutput, 0.0);
-		this->nn.desiredOutput.at(outputCharacters.find(imgCharItr->second)) = 1.0;
-		
-		this->nn.train();
-	}
+	do {
+		lastMSE = currentMSE;
+		currentMSE = 0;
+		iterations++;
+		for (img_char_map_t::iterator imgCharItr = this->imgToChars.begin(); imgCharItr != this->imgToChars.end(); ++imgCharItr) {
+			this->nn.inputData.clear();
+			this->readPixels(imgCharItr->first, tmpPixelValues);
+			this->nn.inputData = tmpPixelValues;
+			
+			this->nn.desiredOutput.assign(this->nn.numOutput, 0.0);
+			this->nn.desiredOutput.at(outputCharacters.find(imgCharItr->second)) = 1.0;
+			
+			this->nn.compute();
+			this->nn.alterWeights(this->nn.output);
+			this->nn.alterWeights(this->nn.hidden);
+			currentMSE += this->nn.calculateMSE();
+			
+			if ( currentMSE == 0.0 ) currentMSE += 0.001;
+		}
+	} while ( iterations < this->nn.maxTrainingIterations and
+			  fabs((currentMSE-lastMSE)/currentMSE) > this->nn.percentChange );
 }
 
 void NNTrainer::readPixels(char_t imgFileName, std::vector<double>& imgPixels) {
 	Magick::Image image(imgFileName);
 	image.type(Magick::BilevelType);
 	imgPixels.clear();
-		
+//	TRI_LOG(imgFileName);
+//	TRI_LOG(image.rows());
+//	TRI_LOG(image.columns());
 	// move the image data into the pixel values structure
 	for (unsigned long h=0; h<image.rows(); ++h) {
 		for (unsigned long w=0; w<image.columns(); ++w) {

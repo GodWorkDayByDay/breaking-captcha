@@ -34,7 +34,7 @@ THE SOFTWARE.
 *****************************************************************************/
  
 #ifndef __RANDOM_H__
-#define __RNADOM_H__
+#define __RANDOM_H__
  
 #define DEVRANDOMERROR 1;
  

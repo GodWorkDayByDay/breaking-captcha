@@ -118,7 +118,7 @@ public:
 	**/
 	std::vector<Neuron> getOutput();
 	
-	double learningRate; /**< This variable controls the rate at which the network learns. It is responsible for smoothing out the learning functions. **/
+	double learningRate; /**< The rate at which the network learns. It is responsible for smoothing out the learning functions. **/
 	int maxTrainingIterations; /**< The max number of iterations to compute while training. **/
 	double percentChange; /**< When to stop the training based on each epoch's mean squared error. A percentage of the rate of change. **/
 	
@@ -130,7 +130,7 @@ public:
 	int numHidden; /**< The number of hidden neurons to create. **/
 	int numOutput; /**< The number of output neurons to create. **/
 	
-	std::vector<double> desiredOutput; /**< The expected results from the training data. Each element is related to each output neuron's expected value **/
+	std::vector<double> desiredOutput; /**< Maps input data to output data for training. */
 	std::vector<double> inputData; /**< The data to be calculated from the environment, in the same form as each set of data in trainingData. **/
 };
 

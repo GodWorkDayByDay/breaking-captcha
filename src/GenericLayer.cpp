@@ -67,7 +67,8 @@ void GenericLayer::init() {
 }
  
 void GenericLayer::initWeights() {
-	int j;
+	int j(0);
+	Random r;
 	
 	if ( this->hasChild and this->numNeurons > 0 and this->childLayer->numNeurons > 0) {
 		this->weights.clear();
@@ -79,7 +80,7 @@ void GenericLayer::initWeights() {
 			this->weights.at(i).resize(this->childLayer->numNeurons);
 			
 			for (j=0; j<this->childLayer->numNeurons; ++j) {
-				this->weights.at(i).at(j) = 1.0;
+				this->weights.at(i).at(j) = r.strong_real();
 			}
 		}
 	}
@@ -92,6 +93,5 @@ void GenericLayer::initNeurons() {
 //	#pragma omp parallel for if(this->numNeurons > 500)
 	for (int i=0; i<this->numNeurons; ++i) {
 		this->neurons.at(i).value = 0.0;
-		this->neurons.at(i).bias = 1;
 	}
 }

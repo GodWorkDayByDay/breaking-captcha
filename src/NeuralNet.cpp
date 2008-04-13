@@ -47,7 +47,7 @@ void NeuralNet::train() {
 	double currentMSE, lastMSE;
 	currentMSE = 10;
 	lastMSE = this->percentChange;
-
+	
 	// either stop training when we have reached a maximum acceptable number of iterations
 	// or when the actual and desired responses are significantly close based on the rate of change
 	while ( ((fabs((currentMSE-lastMSE)/currentMSE)) > this->percentChange) and (iteration < this->maxTrainingIterations) ) {
@@ -69,7 +69,7 @@ double NeuralNet::calculateMSE() {
 	for (int i=0; i<this->output.numNeurons; ++i) {
 		sum += pow(this->output.neurons.at(i).error, 2);
 	}
-	return sum;
+	return sum/(double)this->output.numNeurons;
 }
 
 void NeuralNet::compute() {
@@ -83,7 +83,7 @@ std::vector<Neuron> NeuralNet::getOutput() {
 }
 
 void NeuralNet::calculateNeuronValues(GenericLayer& layer) {
-	double tmp(0);
+	double neuronValue(0);
 	int j(0);
 	
 	// simply put the inputData into the input layer
@@ -97,25 +97,25 @@ void NeuralNet::calculateNeuronValues(GenericLayer& layer) {
 	
 //	#pragma omp parallel for private(j) if(layer.numNeurons > 500)
 	for (int i=0; i<layer.numNeurons; ++i) {
-		tmp = 0;
+		neuronValue = 0;
 		for (j=0; j<layer.parentLayer->numNeurons; ++j) {
-			tmp += layer.parentLayer->neurons.at(j).value * layer.parentLayer->weights.at(j).at(i);
+			neuronValue += layer.parentLayer->neurons.at(j).value * layer.parentLayer->weights.at(j).at(i);
 		}
-		// addition of the bias term, wich is essentially the j+1 weight on i
-//		tmp += layer.neurons.at(i).bias * layer.neurons.at(i).biasWeight;
+		// addition of the bias term
+		neuronValue += layer.neurons.at(i).bias * layer.neurons.at(i).biasWeight;
 		
-		// if this is the output layer then we just pass the value through a linear activation
-		// function, ie y(i) = x.
-		if ( layer.hasChild ) {
-			tmp = this->logisticActivation(tmp);
-		}
+		// pass the value through the activation function
+		neuronValue = this->logisticActivation(neuronValue);
 		
-		if ( tmp > 0.5 ) {
-			layer.neurons.at(i).value = 1;
-		}
-		else {
-			layer.neurons.at(i).value = 0;
-		}
+		// the output layer's neurons are fired when the value is >0.5
+//		if ( !layer.hasChild ) {
+//			if ( neuronValue > 0.5 ) {
+//				layer.neurons.at(i).value = 1;
+//			}
+//			else {
+//				layer.neurons.at(i).value = 0;
+//			}
+//		}
 	}
 }
 
