@@ -10,6 +10,7 @@
 #include <omp.h>
 #include <cstdlib>
 #include <math.h>
+#include "MersenneTwister.h"
 #include "Random.h"
 #include "Neuron.h"
 

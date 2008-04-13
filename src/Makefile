@@ -160,7 +160,7 @@ target_alias =
 top_builddir = ..
 top_srcdir = ..
 guess_SOURCES = guess.cpp GuessCaptcha.cpp Random.cpp GenericLayer.cpp NNTrainer.cpp NeuralNet.cpp Neuron.cpp
-guess_LDADD = -lboost_filesystem-gcc42
+guess_LDADD = -lboost_filesystem-gcc42 -lgomp
 guess_LDFLAGS = `Magick++-config --ldflags --libs`
 guess_CPPFLAGS = `Magick++-config --cppflags --cxxflags` -DHAVE_SSTREAM
 all: all-am

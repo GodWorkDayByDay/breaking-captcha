@@ -10,6 +10,7 @@
 #define NEURALNET_H_
 
 #include <cstdlib>
+#include <cassert>
 #include <cmath>
 #include "GenericLayer.h"
 
@@ -66,6 +67,9 @@ public:
 	 * @param layer The layer to calculate the values of the neurons.
 	**/
 	void calculateNeuronValues(GenericLayer& layer);
+	
+	void calculateNeuronErrors(GenericLayer& layer);
+	void stepNetwork();
 	
 	/**
 	 * Used for computing the value of a neuron after calculating the raw value.
@@ -130,6 +134,8 @@ public:
 	int numHidden; /**< The number of hidden neurons to create. **/
 	int numOutput; /**< The number of output neurons to create. **/
 	
+	std::vector<std::vector<double> > trainingInput;
+	std::vector<std::vector<double> > trainingOutput;
 	std::vector<double> desiredOutput; /**< Maps input data to output data for training. */
 	std::vector<double> inputData; /**< The data to be calculated from the environment, in the same form as each set of data in trainingData. **/
 };

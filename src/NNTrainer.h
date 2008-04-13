@@ -68,9 +68,9 @@ public:
 	**/
 	void getFileNames(std::vector<path_t>& names);
 	
-	img_char_map_t imgToChars; /**< Maps the training image locations to which character they depict. **/
-	path_t imgPath; /**< The directory where all the training images can be found. **/
 	NeuralNet nn; /**< The neural network this class is to train. **/
+	path_t imgPath; /**< The directory where all the training images can be found. **/
+	img_char_map_t imgToChars; /**< Maps the training image locations to which character they depict. **/
 };
 
 #endif /*NNTRAINER_H_*/

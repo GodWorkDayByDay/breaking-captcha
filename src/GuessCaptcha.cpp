@@ -145,7 +145,7 @@ void GuessCaptcha::computeData() {
 }
 
 void GuessCaptcha::readOutputs() {
-	int largestIndex = 0;
+	size_t largestIndex = 0;
 	double largestValue = 0;
 	std::string tmpGuess;
 	this->guess.clear();
