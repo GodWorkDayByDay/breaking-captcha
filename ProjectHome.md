@@ -1,0 +1,1 @@
+Using a combination of image processing and segmentation with neural networks, this project seeks to build a general way of defeating the common web security measure referred to as CAPTCHAs.
